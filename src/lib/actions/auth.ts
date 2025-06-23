@@ -1,6 +1,6 @@
 'use server';
 
-import { signIn, signUp } from '@/lib/auth-client';
+import { signIn, signUp, signOut } from '@/lib/auth-client';
 import { redirect } from 'next/navigation';
 import { z } from 'zod';
 
@@ -99,5 +99,16 @@ export async function signUpAction(prevState: any, formData: FormData) {
     return {
       error: 'An error occurred during sign up',
     };
+  }
+}
+
+export async function signOutAction() {
+  try {
+    await signOut();
+    redirect('/');
+  } catch (error) {
+    console.error('Sign out error:', error);
+    // Even if there's an error, redirect to home
+    redirect('/');
   }
 }
