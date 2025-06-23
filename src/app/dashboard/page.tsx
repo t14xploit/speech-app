@@ -1,6 +1,7 @@
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { signOutAction } from "@/lib/actions/auth";
+import Link from "next/link";
 
 export default function DashboardPage() {
 
@@ -41,9 +42,11 @@ export default function DashboardPage() {
               <p className="text-gray-600 mb-4">
                 Manage your children&apos;s speech development profiles
               </p>
-              <Button className="w-full bg-blue-600 hover:bg-blue-700">
-                Manage Profiles
-              </Button>
+              <Link href="/dashboard/children">
+                <Button className="w-full bg-blue-600 hover:bg-blue-700">
+                  Manage Profiles
+                </Button>
+              </Link>
             </CardContent>
           </Card>
 
@@ -58,9 +61,11 @@ export default function DashboardPage() {
               <p className="text-gray-600 mb-4">
                 Interactive exercises tailored to your child&apos;s level
               </p>
-              <Button className="w-full bg-green-600 hover:bg-green-700">
-                Start Exercises
-              </Button>
+              <Link href="/dashboard/exercises">
+                <Button className="w-full bg-green-600 hover:bg-green-700">
+                  Start Exercises
+                </Button>
+              </Link>
             </CardContent>
           </Card>
 
@@ -75,9 +80,11 @@ export default function DashboardPage() {
               <p className="text-gray-600 mb-4">
                 View detailed statistics and progress reports
               </p>
-              <Button className="w-full bg-purple-600 hover:bg-purple-700">
-                View Progress
-              </Button>
+              <Link href="/dashboard/progress">
+                <Button className="w-full bg-purple-600 hover:bg-purple-700">
+                  View Progress
+                </Button>
+              </Link>
             </CardContent>
           </Card>
 
@@ -92,9 +99,11 @@ export default function DashboardPage() {
               <p className="text-gray-600 mb-4">
                 Expand your child&apos;s vocabulary with targeted words
               </p>
-              <Button className="w-full bg-orange-600 hover:bg-orange-700">
-                Build Vocabulary
-              </Button>
+              <Link href="/dashboard/vocabulary">
+                <Button className="w-full bg-orange-600 hover:bg-orange-700">
+                  Build Vocabulary
+                </Button>
+              </Link>
             </CardContent>
           </Card>
 
@@ -109,9 +118,11 @@ export default function DashboardPage() {
               <p className="text-gray-600 mb-4">
                 Customize your experience and preferences
               </p>
-              <Button className="w-full bg-gray-600 hover:bg-gray-700">
-                Open Settings
-              </Button>
+              <Link href="/dashboard/settings">
+                <Button className="w-full bg-gray-600 hover:bg-gray-700">
+                  Open Settings
+                </Button>
+              </Link>
             </CardContent>
           </Card>
 
@@ -126,9 +137,11 @@ export default function DashboardPage() {
               <p className="text-gray-600 mb-4">
                 Get help and learn how to use SpeechBuddy effectively
               </p>
-              <Button className="w-full bg-indigo-600 hover:bg-indigo-700">
-                Get Help
-              </Button>
+              <Link href="/dashboard/help">
+                <Button className="w-full bg-indigo-600 hover:bg-indigo-700">
+                  Get Help
+                </Button>
+              </Link>
             </CardContent>
           </Card>
         </div>
