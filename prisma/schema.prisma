@@ -1,0 +1,157 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
+// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
+
+generator client {
+  provider = "prisma-client-js"
+  output   = "../src/generated/prisma"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+// User model for parent authentication
+model User {
+  id        String   @id @default(cuid())
+  email     String   @unique
+  name      String
+  children  Child[]
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@map("users")
+}
+
+// Child profile with automatic level calculation
+model Child {
+  id              String            @id @default(cuid())
+  name            String
+  birthDate       DateTime
+  level           Int               @default(0) // 0, 1, 2, 3 based on age
+  userId          String
+  user            User              @relation(fields: [userId], references: [id], onDelete: Cascade)
+  knownWords      ChildWord[]
+  exerciseResults ExerciseResult[]
+  weeklyProgress  WeeklyProgress[]
+  createdAt       DateTime          @default(now())
+  updatedAt       DateTime          @updatedAt
+
+  @@map("children")
+}
+
+// Categories for organizing words (e.g., Animals, Food, Actions, etc.)
+model Category {
+  id          String     @id @default(cuid())
+  name        String     @unique
+  description String?
+  icon        String?    // Icon name or emoji for UI
+  words       Word[]
+  exercises   Exercise[]
+
+  @@map("categories")
+}
+
+// Words with level and category assignment
+model Word {
+  id          String           @id @default(cuid())
+  text        String
+  level       Int              // 0, 1, 2, 3
+  categoryId  String
+  category    Category         @relation(fields: [categoryId], references: [id])
+  exercises   Exercise[]
+  childWords  ChildWord[]
+  imageUrl    String?          // Optional image for the word
+  audioUrl    String?          // Optional pronunciation audio
+  difficulty  Int              @default(1) // 1-5 difficulty within level
+  createdAt   DateTime         @default(now())
+
+  @@unique([text, level]) // Same word can exist at different levels
+  @@map("words")
+}
+
+// Track which words a child knows
+model ChildWord {
+  id          String    @id @default(cuid())
+  childId     String
+  wordId      String
+  dateLearned DateTime  @default(now())
+  notes       String?   // Optional notes from parent
+  child       Child     @relation(fields: [childId], references: [id], onDelete: Cascade)
+  word        Word      @relation(fields: [wordId], references: [id])
+
+  @@unique([childId, wordId])
+  @@map("child_words")
+}
+
+// Exercise types and templates
+model Exercise {
+  id          String           @id @default(cuid())
+  title       String
+  description String
+  type        ExerciseType
+  level       Int              // 0, 1, 2, 3
+  categoryId  String?          // Optional: specific to category
+  wordId      String?          // Optional: specific to word
+  category    Category?        @relation(fields: [categoryId], references: [id])
+  word        Word?            @relation(fields: [wordId], references: [id])
+  content     Json             // Flexible content structure for different exercise types
+  mediaUrl    String?          // Optional: Image, audio, or video
+  results     ExerciseResult[]
+  createdAt   DateTime         @default(now())
+
+  @@map("exercises")
+}
+
+// Track exercise completion and results
+model ExerciseResult {
+  id         String         @id @default(cuid())
+  childId    String
+  exerciseId String
+  status     ExerciseStatus
+  score      Int?           // Optional: score out of 100
+  timeSpent  Int?           // Time in seconds
+  notes      String?        // Optional notes
+  child      Child          @relation(fields: [childId], references: [id], onDelete: Cascade)
+  exercise   Exercise       @relation(fields: [exerciseId], references: [id])
+  createdAt  DateTime       @default(now())
+
+  @@map("exercise_results")
+}
+
+// Weekly progress tracking for statistics
+model WeeklyProgress {
+  id            String   @id @default(cuid())
+  childId       String
+  weekStart     DateTime // Start of the week (Monday)
+  wordsLearned  Int      @default(0)
+  exercisesDone Int      @default(0)
+  totalScore    Int      @default(0)
+  child         Child    @relation(fields: [childId], references: [id], onDelete: Cascade)
+  createdAt     DateTime @default(now())
+  updatedAt     DateTime @updatedAt
+
+  @@unique([childId, weekStart])
+  @@map("weekly_progress")
+}
+
+// Enums for better type safety
+enum ExerciseType {
+  WORD_RECOGNITION    // Show image, child identifies word
+  PRONUNCIATION      // Child repeats word
+  CATEGORIZATION     // Sort words into categories
+  MATCHING          // Match word to image
+  FILL_IN_BLANK     // Complete sentence with word
+  STORY_TELLING     // Use words in story context
+  SOUND_RECOGNITION // Identify first letter/sound
+}
+
+enum ExerciseStatus {
+  NOT_STARTED
+  IN_PROGRESS
+  COMPLETED
+  ATTEMPTED
+}
