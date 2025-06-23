@@ -1,103 +1,131 @@
-import Image from "next/image";
+import Link from "next/link";
 
 export default function Home() {
   return (
-    <div className="grid grid-rows-[20px_1fr_20px] items-center justify-items-center min-h-screen p-8 pb-20 gap-16 sm:p-20 font-[family-name:var(--font-geist-sans)]">
-      <main className="flex flex-col gap-[32px] row-start-2 items-center sm:items-start">
-        <Image
-          className="dark:invert"
-          src="/next.svg"
-          alt="Next.js logo"
-          width={180}
-          height={38}
-          priority
-        />
-        <ol className="list-inside list-decimal text-sm/6 text-center sm:text-left font-[family-name:var(--font-geist-mono)]">
-          <li className="mb-2 tracking-[-.01em]">
-            Get started by editing{" "}
-            <code className="bg-black/[.05] dark:bg-white/[.06] px-1 py-0.5 rounded font-[family-name:var(--font-geist-mono)] font-semibold">
-              src/app/page.tsx
-            </code>
-            .
-          </li>
-          <li className="tracking-[-.01em]">
-            Save and see your changes instantly.
-          </li>
-        </ol>
-
-        <div className="flex gap-4 items-center flex-col sm:flex-row">
-          <a
-            className="rounded-full border border-solid border-transparent transition-colors flex items-center justify-center bg-foreground text-background gap-2 hover:bg-[#383838] dark:hover:bg-[#ccc] font-medium text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5 sm:w-auto"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <Image
-              className="dark:invert"
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={20}
-              height={20}
-            />
-            Deploy now
-          </a>
-          <a
-            className="rounded-full border border-solid border-black/[.08] dark:border-white/[.145] transition-colors flex items-center justify-center hover:bg-[#f2f2f2] dark:hover:bg-[#1a1a1a] hover:border-transparent font-medium text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5 w-full sm:w-auto md:w-[158px]"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Read our docs
-          </a>
+    <div className="min-h-screen bg-gradient-to-br from-blue-50 via-purple-50 to-pink-50">
+      {/* Hero Section */}
+      <div className="container mx-auto px-4 py-16">
+        <div className="text-center mb-16">
+          <h1 className="text-5xl md:text-6xl font-bold text-gray-800 mb-6">
+            🗣️ SpeechBuddy
+          </h1>
+          <p className="text-xl md:text-2xl text-gray-600 mb-8 max-w-3xl mx-auto">
+            A comprehensive speech therapy app for busy parents helping children with speech delays
+          </p>
+          <div className="flex flex-col sm:flex-row gap-4 justify-center">
+            <Link
+              href="/demo"
+              className="bg-blue-600 hover:bg-blue-700 text-white px-8 py-4 rounded-2xl font-semibold text-lg transition-colors shadow-lg"
+            >
+              Try Demo
+            </Link>
+            <Link
+              href="/about"
+              className="bg-white hover:bg-gray-50 text-gray-800 px-8 py-4 rounded-2xl font-semibold text-lg transition-colors shadow-lg border border-gray-200"
+            >
+              Learn More
+            </Link>
+          </div>
         </div>
-      </main>
-      <footer className="row-start-3 flex gap-[24px] flex-wrap items-center justify-center">
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/file.svg"
-            alt="File icon"
-            width={16}
-            height={16}
-          />
-          Learn
-        </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/window.svg"
-            alt="Window icon"
-            width={16}
-            height={16}
-          />
-          Examples
-        </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/globe.svg"
-            alt="Globe icon"
-            width={16}
-            height={16}
-          />
-          Go to nextjs.org →
-        </a>
-      </footer>
+
+        {/* Features Grid */}
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 mb-16">
+          <div className="bg-white rounded-2xl p-6 shadow-lg hover:shadow-xl transition-shadow">
+            <div className="text-4xl mb-4">📊</div>
+            <h3 className="text-xl font-semibold text-gray-800 mb-2">Statistics</h3>
+            <p className="text-gray-600">
+              Track total known words, progress per category, and weekly vocabulary growth with beautiful charts.
+            </p>
+          </div>
+
+          <div className="bg-white rounded-2xl p-6 shadow-lg hover:shadow-xl transition-shadow">
+            <div className="text-4xl mb-4">🧩</div>
+            <h3 className="text-xl font-semibold text-gray-800 mb-2">Exercises</h3>
+            <p className="text-gray-600">
+              Interactive exercises tailored to your child's level with word recognition, pronunciation, and more.
+            </p>
+          </div>
+
+          <div className="bg-white rounded-2xl p-6 shadow-lg hover:shadow-xl transition-shadow">
+            <div className="text-4xl mb-4">👶</div>
+            <h3 className="text-xl font-semibold text-gray-800 mb-2">Child Profiles</h3>
+            <p className="text-gray-600">
+              Create profiles with automatic level calculation based on age and track individual progress.
+            </p>
+          </div>
+
+          <div className="bg-white rounded-2xl p-6 shadow-lg hover:shadow-xl transition-shadow">
+            <div className="text-4xl mb-4">📚</div>
+            <h3 className="text-xl font-semibold text-gray-800 mb-2">Vocabulary</h3>
+            <p className="text-gray-600">
+              Comprehensive word lists organized by categories and levels, with date tracking and notes.
+            </p>
+          </div>
+        </div>
+
+        {/* Level System */}
+        <div className="bg-white rounded-2xl p-8 shadow-lg mb-16">
+          <h2 className="text-3xl font-bold text-gray-800 text-center mb-8">
+            🎯 Four Progressive Levels
+          </h2>
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+            <div className="text-center p-6 bg-gradient-to-br from-blue-50 to-blue-100 rounded-xl">
+              <div className="text-4xl mb-3">🍼</div>
+              <h3 className="text-lg font-semibold text-gray-800 mb-2">Level 0</h3>
+              <p className="text-sm text-gray-600 mb-2">12-18 months</p>
+              <p className="text-sm text-gray-700">First words (0-50 vocabulary)</p>
+            </div>
+
+            <div className="text-center p-6 bg-gradient-to-br from-green-50 to-green-100 rounded-xl">
+              <div className="text-4xl mb-3">👶</div>
+              <h3 className="text-lg font-semibold text-gray-800 mb-2">Level 1</h3>
+              <p className="text-sm text-gray-600 mb-2">18-24 months</p>
+              <p className="text-sm text-gray-700">Two-word phrases (50-200 words)</p>
+            </div>
+
+            <div className="text-center p-6 bg-gradient-to-br from-purple-50 to-purple-100 rounded-xl">
+              <div className="text-4xl mb-3">🧒</div>
+              <h3 className="text-lg font-semibold text-gray-800 mb-2">Level 2</h3>
+              <p className="text-sm text-gray-600 mb-2">2-3 years</p>
+              <p className="text-sm text-gray-700">Simple sentences (200-1000 words)</p>
+            </div>
+
+            <div className="text-center p-6 bg-gradient-to-br from-orange-50 to-orange-100 rounded-xl">
+              <div className="text-4xl mb-3">👦</div>
+              <h3 className="text-lg font-semibold text-gray-800 mb-2">Level 3</h3>
+              <p className="text-sm text-gray-600 mb-2">3-4 years</p>
+              <p className="text-sm text-gray-700">Complex speech (1000+ words)</p>
+            </div>
+          </div>
+        </div>
+
+        {/* Research-Based */}
+        <div className="bg-gradient-to-r from-purple-600 to-blue-600 text-white rounded-2xl p-8 text-center">
+          <h2 className="text-3xl font-bold mb-4">🔬 Research-Based Approach</h2>
+          <p className="text-lg mb-6 max-w-2xl mx-auto">
+            Our vocabulary and exercises are based on established speech development milestones from
+            Speech and Language UK and Stanford Children's Health research.
+          </p>
+          <div className="flex flex-col sm:flex-row gap-4 justify-center">
+            <a
+              href="https://speechandlanguage.org.uk/help-for-families/ages-and-stages/"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="bg-white text-purple-600 px-6 py-3 rounded-xl font-semibold hover:bg-gray-100 transition-colors"
+            >
+              Speech & Language UK
+            </a>
+            <a
+              href="https://www.stanfordchildrens.org/en/topic/default?id=age-appropriate-speech-and-language-milestones-90-P02170"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="bg-white text-purple-600 px-6 py-3 rounded-xl font-semibold hover:bg-gray-100 transition-colors"
+            >
+              Stanford Children's Health
+            </a>
+          </div>
+        </div>
+      </div>
     </div>
   );
 }
