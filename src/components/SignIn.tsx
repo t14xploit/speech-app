@@ -23,11 +23,11 @@ export default function SignIn() {
   const router = useRouter();
 
   return (
-    <Card className="rounded-md max-w-md">
-      <CardHeader>
-        <CardTitle className="text-lg md:text-xl">Sign in</CardTitle>
-        <CardDescription className="text-xs md:text-sm">
-          Enter your information to sign in to your account
+    <Card className="shadow-2xl border-0 bg-white/80 backdrop-blur-sm">
+      <CardHeader className="text-center pb-6">
+        <CardTitle className="text-2xl font-bold text-gray-800">Sign In</CardTitle>
+        <CardDescription className="text-gray-600">
+          Enter your credentials to access your dashboard
         </CardDescription>
       </CardHeader>
       <CardContent>
@@ -61,6 +61,7 @@ export default function SignIn() {
           <Button
             type="submit"
             disabled={loading}
+            className="w-full h-11 bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 text-white font-semibold"
             onClick={async () => {
               setLoading(true);
               try {
@@ -81,7 +82,14 @@ export default function SignIn() {
               }
             }}
           >
-            {loading ? <Loader2 className="animate-spin" /> : "Sign in"}
+            {loading ? (
+              <>
+                <Loader2 className="animate-spin mr-2 h-4 w-4" />
+                Signing in...
+              </>
+            ) : (
+              "Sign In"
+            )}
           </Button>
         </div>
       </CardContent>

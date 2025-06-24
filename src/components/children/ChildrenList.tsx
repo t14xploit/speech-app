@@ -4,7 +4,7 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { AlertDialog, AlertDialogAction, AlertDialogCancel, AlertDialogContent, AlertDialogDescription, AlertDialogFooter, AlertDialogHeader, AlertDialogTitle, AlertDialogTrigger } from "@/components/ui/alert-dialog";
-import { Trash2, Calendar, TrendingUp, BookOpen } from "lucide-react";
+import { Trash2, Calendar, TrendingUp, BookOpen, Play, BarChart3 } from "lucide-react";
 import Link from "next/link";
 import { deleteChildAction } from "@/lib/actions/children";
 import { useRouter } from "next/navigation";
@@ -108,24 +108,29 @@ export default function ChildrenList({ children }: ChildrenListProps) {
           const age = calculateAge(new Date(child.birthDate));
           
           return (
-            <Card key={child.id} className="shadow-lg border-0 hover:shadow-xl transition-shadow">
-              <CardHeader className="pb-3">
+            <Card key={child.id} className="shadow-lg border-0 hover:shadow-xl transition-all duration-300 bg-gradient-to-br from-white to-gray-50">
+              <CardHeader className="pb-4">
                 <div className="flex justify-between items-start">
-                  <div>
-                    <CardTitle className="text-xl text-gray-800 mb-1">
-                      {child.name}
-                    </CardTitle>
-                    <div className="flex items-center text-sm text-gray-600 mb-2">
-                      <Calendar className="w-4 h-4 mr-1" />
-                      {age}
+                  <div className="flex items-center space-x-3">
+                    <div className="w-12 h-12 bg-gradient-to-br from-blue-400 to-purple-500 rounded-full flex items-center justify-center text-white font-bold text-lg">
+                      {child.name.charAt(0).toUpperCase()}
+                    </div>
+                    <div>
+                      <CardTitle className="text-xl text-gray-800 mb-1">
+                        {child.name}
+                      </CardTitle>
+                      <div className="flex items-center text-sm text-gray-600">
+                        <Calendar className="w-4 h-4 mr-1" />
+                        {age}
+                      </div>
                     </div>
                   </div>
                   <AlertDialog>
                     <AlertDialogTrigger asChild>
-                      <Button 
-                        variant="ghost" 
+                      <Button
+                        variant="ghost"
                         size="sm"
-                        className="text-red-600 hover:text-red-700 hover:bg-red-50"
+                        className="text-red-600 hover:text-red-700 hover:bg-red-50 rounded-full"
                         disabled={deletingId === child.id}
                       >
                         <Trash2 className="w-4 h-4" />
@@ -140,7 +145,7 @@ export default function ChildrenList({ children }: ChildrenListProps) {
                       </AlertDialogHeader>
                       <AlertDialogFooter>
                         <AlertDialogCancel>Cancel</AlertDialogCancel>
-                        <AlertDialogAction 
+                        <AlertDialogAction
                           onClick={() => handleDelete(child.id)}
                           className="bg-red-600 hover:bg-red-700"
                         >
@@ -150,59 +155,64 @@ export default function ChildrenList({ children }: ChildrenListProps) {
                     </AlertDialogContent>
                   </AlertDialog>
                 </div>
-                <Badge className={`${levelInfo.color} w-fit`}>
-                  {levelInfo.name}
-                </Badge>
+
+                <div className="flex items-center justify-between mt-3">
+                  <Badge className={`${levelInfo.color} px-3 py-1`}>
+                    {levelInfo.name}
+                  </Badge>
+                  <div className="text-xs text-gray-500">
+                    {levelInfo.description}
+                  </div>
+                </div>
               </CardHeader>
-              <CardContent>
-                <p className="text-sm text-gray-600 mb-4">
-                  {levelInfo.description}
-                </p>
-                
-                <div className="space-y-3">
-                  <Link href={`/dashboard/children/${child.id}/vocabulary`}>
-                    <Button className="w-full bg-blue-600 hover:bg-blue-700" size="sm">
-                      <BookOpen className="w-4 h-4 mr-2" />
-                      Vocabulary Builder
-                    </Button>
-                  </Link>
 
-                  <Button className="w-full bg-green-600 hover:bg-green-700" size="sm">
-                    <TrendingUp className="w-4 h-4 mr-2" />
-                    Start Exercises
-                  </Button>
-
-                  <div className="grid grid-cols-2 gap-2">
-                    <Button variant="outline" size="sm" className="text-xs">
-                      View Progress
-                    </Button>
-                    <Button variant="outline" size="sm" className="text-xs">
-                      Edit Profile
-                    </Button>
+              <CardContent className="pt-0">
+                {/* Statistics */}
+                <div className="grid grid-cols-3 gap-4 mb-4 p-3 bg-gray-50 rounded-lg">
+                  <div className="text-center">
+                    <div className="text-lg font-bold text-blue-600">
+                      {child.stats?.knownWords || 0}
+                    </div>
+                    <div className="text-xs text-gray-600">Words</div>
+                  </div>
+                  <div className="text-center">
+                    <div className="text-lg font-bold text-green-600">
+                      {child.stats?.exercises || 0}
+                    </div>
+                    <div className="text-xs text-gray-600">Exercises</div>
+                  </div>
+                  <div className="text-center">
+                    <div className="text-lg font-bold text-purple-600">
+                      {child.stats?.days || 0}
+                    </div>
+                    <div className="text-xs text-gray-600">Days</div>
                   </div>
                 </div>
 
-                <div className="mt-4 pt-3 border-t border-gray-100">
-                  <div className="grid grid-cols-3 gap-2 text-center">
-                    <div>
-                      <div className="text-lg font-semibold text-blue-600">
-                        {child.stats?.knownWords || 0}
-                      </div>
-                      <div className="text-xs text-gray-500">Words</div>
-                    </div>
-                    <div>
-                      <div className="text-lg font-semibold text-green-600">
-                        {child.stats?.exercises || 0}
-                      </div>
-                      <div className="text-xs text-gray-500">Exercises</div>
-                    </div>
-                    <div>
-                      <div className="text-lg font-semibold text-purple-600">
-                        {child.stats?.days || 0}
-                      </div>
-                      <div className="text-xs text-gray-500">Days</div>
-                    </div>
-                  </div>
+                {/* Action Buttons */}
+                <div className="grid grid-cols-2 gap-3">
+                  <Link href={`/dashboard/children/${child.id}/vocabulary`}>
+                    <Button className="w-full bg-gradient-to-r from-blue-500 to-blue-600 hover:from-blue-600 hover:to-blue-700 text-white" size="sm">
+                      <BookOpen className="w-4 h-4 mr-2" />
+                      Vocabulary
+                    </Button>
+                  </Link>
+
+                  <Button className="w-full bg-gradient-to-r from-green-500 to-green-600 hover:from-green-600 hover:to-green-700 text-white" size="sm">
+                    <Play className="w-4 h-4 mr-2" />
+                    Exercises
+                  </Button>
+                </div>
+
+                {/* Secondary Actions */}
+                <div className="grid grid-cols-2 gap-2 mt-3">
+                  <Button variant="outline" size="sm" className="text-xs hover:bg-gray-50">
+                    <BarChart3 className="w-3 h-3 mr-1" />
+                    Progress
+                  </Button>
+                  <Button variant="outline" size="sm" className="text-xs hover:bg-gray-50">
+                    Edit Profile
+                  </Button>
                 </div>
               </CardContent>
             </Card>
