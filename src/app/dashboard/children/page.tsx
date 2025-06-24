@@ -72,7 +72,7 @@ export default async function ChildrenPage() {
 
         {/* Features Info */}
         <div className="mt-8 grid grid-cols-1 md:grid-cols-3 gap-6">
-          <Card className="shadow-lg border-0">
+          <Card className="shadow-lg border-0 bg-gradient-to-br from-blue-50/60 via-blue-50/40 to-white hover:shadow-xl transition-all duration-300">
             <CardHeader>
               <CardTitle className="text-lg text-gray-800 flex items-center">
                 📊 Level Assessment
@@ -85,7 +85,7 @@ export default async function ChildrenPage() {
             </CardContent>
           </Card>
 
-          <Card className="shadow-lg border-0">
+          <Card className="shadow-lg border-0 bg-gradient-to-br from-green-50/60 via-green-50/40 to-white hover:shadow-xl transition-all duration-300">
             <CardHeader>
               <CardTitle className="text-lg text-gray-800 flex items-center">
                 📈 Progress Tracking
@@ -98,7 +98,7 @@ export default async function ChildrenPage() {
             </CardContent>
           </Card>
 
-          <Card className="shadow-lg border-0">
+          <Card className="shadow-lg border-0 bg-gradient-to-br from-purple-50/60 via-purple-50/40 to-white hover:shadow-xl transition-all duration-300">
             <CardHeader>
               <CardTitle className="text-lg text-gray-800 flex items-center">
                 🎯 Personalized Exercises

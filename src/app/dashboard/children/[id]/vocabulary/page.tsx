@@ -8,7 +8,7 @@ import { Input } from "@/components/ui/input";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from "@/components/ui/dropdown-menu";
-import { ArrowLeft, BookOpen, Check, Plus, MoreVertical, Search, Filter } from "lucide-react";
+import { ArrowLeft, BookOpen, Check, Plus, Search, Filter } from "lucide-react";
 import Link from "next/link";
 import { getCategoriesWithWords, getChildVocabulary, updateWordStatus } from "@/lib/actions/vocabulary";
 

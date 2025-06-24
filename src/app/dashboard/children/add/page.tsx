@@ -60,7 +60,7 @@ export default function AddChildPage() {
         </div>
 
         {/* Main Form Card */}
-        <Card className="shadow-lg border-0 mb-6">
+        <Card className="shadow-lg border-0 mb-6 bg-gradient-to-br from-white to-blue-50/30 hover:shadow-xl transition-all duration-300">
           <CardHeader>
             <CardTitle className="text-xl text-gray-800 flex items-center">
               <Baby className="mr-2 h-5 w-5" />
