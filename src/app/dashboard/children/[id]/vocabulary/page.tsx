@@ -4,9 +4,11 @@ import { useState, useEffect, use } from 'react';
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
+import { Input } from "@/components/ui/input";
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from "@/components/ui/dropdown-menu";
-import { ArrowLeft, BookOpen, Check, Plus, MoreVertical } from "lucide-react";
+import { ArrowLeft, BookOpen, Check, Plus, MoreVertical, Search, Filter } from "lucide-react";
 import Link from "next/link";
 import { getCategoriesWithWords, getChildVocabulary, updateWordStatus } from "@/lib/actions/vocabulary";
 
@@ -34,59 +36,45 @@ interface VocabularyPageProps {
   params: Promise<{ id: string }>;
 }
 
-function WordCard({ word, isKnown, onStatusChange }: {
+function WordBadge({ word, isKnown, onStatusChange }: {
   word: Word;
   isKnown: boolean;
   onStatusChange: (wordId: string, status: 'known' | 'learning' | 'remove') => void;
 }) {
   return (
-    <div className={`relative p-3 rounded-lg border transition-all ${
-      isKnown 
-        ? 'bg-green-50 border-green-200' 
-        : 'bg-white border-gray-200 hover:border-blue-300'
-    }`}>
-      <div className="flex items-center justify-between">
-        <div className="flex items-center gap-2">
-          <span className="font-medium text-gray-800">{word.text}</span>
-          {isKnown && <Check className="h-4 w-4 text-green-600" />}
-        </div>
-        
-        <DropdownMenu>
-          <DropdownMenuTrigger asChild>
-            <Button variant="ghost" size="sm" className="h-8 w-8 p-0">
-              <MoreVertical className="h-4 w-4" />
-            </Button>
-          </DropdownMenuTrigger>
-          <DropdownMenuContent align="end">
-            {!isKnown ? (
-              <>
-                <DropdownMenuItem onClick={() => onStatusChange(word.id, 'known')}>
-                  <Check className="mr-2 h-4 w-4" />
-                  Mark as Known
-                </DropdownMenuItem>
-                <DropdownMenuItem onClick={() => onStatusChange(word.id, 'learning')}>
-                  <Plus className="mr-2 h-4 w-4" />
-                  Add to Learning
-                </DropdownMenuItem>
-              </>
-            ) : (
-              <DropdownMenuItem onClick={() => onStatusChange(word.id, 'remove')}>
-                Remove from Known
-              </DropdownMenuItem>
-            )}
-          </DropdownMenuContent>
-        </DropdownMenu>
-      </div>
-      
-      <div className="flex items-center gap-2 mt-1">
-        <Badge variant="outline" className="text-xs">
-          Level {word.level}
+    <DropdownMenu>
+      <DropdownMenuTrigger asChild>
+        <Badge
+          variant={isKnown ? "default" : "outline"}
+          className={`cursor-pointer transition-all hover:scale-105 ${
+            isKnown
+              ? 'bg-green-500 hover:bg-green-600 text-white'
+              : 'hover:bg-blue-50 hover:border-blue-300'
+          }`}
+        >
+          {word.text}
+          {isKnown && <Check className="ml-1 h-3 w-3" />}
         </Badge>
-        <Badge variant="outline" className="text-xs">
-          {word.category.name}
-        </Badge>
-      </div>
-    </div>
+      </DropdownMenuTrigger>
+      <DropdownMenuContent align="center">
+        {!isKnown ? (
+          <>
+            <DropdownMenuItem onClick={() => onStatusChange(word.id, 'known')}>
+              <Check className="mr-2 h-4 w-4" />
+              Mark as Known
+            </DropdownMenuItem>
+            <DropdownMenuItem onClick={() => onStatusChange(word.id, 'learning')}>
+              <Plus className="mr-2 h-4 w-4" />
+              Add to Learning
+            </DropdownMenuItem>
+          </>
+        ) : (
+          <DropdownMenuItem onClick={() => onStatusChange(word.id, 'remove')}>
+            Remove from Known
+          </DropdownMenuItem>
+        )}
+      </DropdownMenuContent>
+    </DropdownMenu>
   );
 }
 
@@ -96,6 +84,8 @@ export default function VocabularyPage({ params }: VocabularyPageProps) {
   const [knownWords, setKnownWords] = useState<Word[]>([]);
   const [loading, setLoading] = useState(true);
   const [selectedLevel, setSelectedLevel] = useState<number>(0);
+  const [searchTerm, setSearchTerm] = useState<string>('');
+  const [selectedCategory, setSelectedCategory] = useState<string>('all');
 
   useEffect(() => {
     async function loadData() {
@@ -139,17 +129,39 @@ export default function VocabularyPage({ params }: VocabularyPageProps) {
     }
   };
 
-  const getWordsForLevel = (level: number) => {
-    return categories.reduce((acc, category) => {
+  const getFilteredWords = (level: number) => {
+    let allWords: Word[] = [];
+
+    categories.forEach(category => {
       const levelWords = category.words.filter(word => word.level === level);
-      if (levelWords.length > 0) {
-        acc.push({
-          ...category,
-          words: levelWords
-        });
+      allWords = [...allWords, ...levelWords];
+    });
+
+    // Filter by search term
+    if (searchTerm) {
+      allWords = allWords.filter(word =>
+        word.text.toLowerCase().includes(searchTerm.toLowerCase())
+      );
+    }
+
+    // Filter by category
+    if (selectedCategory !== 'all') {
+      allWords = allWords.filter(word =>
+        word.category.name === selectedCategory
+      );
+    }
+
+    // Group by category for display
+    const groupedWords = allWords.reduce((acc, word) => {
+      const categoryName = word.category.name;
+      if (!acc[categoryName]) {
+        acc[categoryName] = [];
       }
+      acc[categoryName].push(word);
       return acc;
-    }, [] as Category[]);
+    }, {} as Record<string, Word[]>);
+
+    return groupedWords;
   };
 
   const getKnownWordsCount = (level: number) => {
@@ -196,6 +208,41 @@ export default function VocabularyPage({ params }: VocabularyPageProps) {
           </div>
         </div>
 
+        {/* Search and Filter */}
+        <Card className="shadow-lg border-0 mb-6 bg-gradient-to-r from-blue-50/50 to-purple-50/50">
+          <CardContent className="p-6">
+            <div className="flex flex-col md:flex-row gap-4">
+              <div className="flex-1">
+                <div className="relative">
+                  <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 h-4 w-4" />
+                  <Input
+                    placeholder="Search words..."
+                    value={searchTerm}
+                    onChange={(e) => setSearchTerm(e.target.value)}
+                    className="pl-10"
+                  />
+                </div>
+              </div>
+              <div className="md:w-48">
+                <Select value={selectedCategory} onValueChange={setSelectedCategory}>
+                  <SelectTrigger>
+                    <Filter className="w-4 h-4 mr-2" />
+                    <SelectValue placeholder="All Categories" />
+                  </SelectTrigger>
+                  <SelectContent>
+                    <SelectItem value="all">All Categories</SelectItem>
+                    {categories.map((category) => (
+                      <SelectItem key={category.id} value={category.name}>
+                        {category.icon} {category.name}
+                      </SelectItem>
+                    ))}
+                  </SelectContent>
+                </Select>
+              </div>
+            </div>
+          </CardContent>
+        </Card>
+
         {/* Level Tabs */}
         <Tabs value={selectedLevel.toString()} onValueChange={(value) => setSelectedLevel(parseInt(value))}>
           <TabsList className="grid w-full grid-cols-4 mb-8">
@@ -209,35 +256,58 @@ export default function VocabularyPage({ params }: VocabularyPageProps) {
             ))}
           </TabsList>
 
-          {[0, 1, 2, 3].map((level) => (
-            <TabsContent key={level} value={level.toString()}>
-              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-                {getWordsForLevel(level).map((category) => (
-                  <Card key={category.id} className="shadow-lg border-0">
-                    <CardHeader className="pb-3">
-                      <CardTitle className="text-lg flex items-center">
-                        <span className="text-2xl mr-2">{category.icon}</span>
-                        {category.name}
-                      </CardTitle>
-                      <p className="text-sm text-gray-600">{category.description}</p>
-                    </CardHeader>
-                    <CardContent>
-                      <div className="space-y-2">
-                        {category.words.map((word) => (
-                          <WordCard
-                            key={word.id}
-                            word={word}
-                            isKnown={knownWords.some(kw => kw.id === word.id)}
-                            onStatusChange={handleWordStatusChange}
-                          />
-                        ))}
-                      </div>
+          {[0, 1, 2, 3].map((level) => {
+            const filteredWords = getFilteredWords(level);
+            const hasWords = Object.keys(filteredWords).length > 0;
+
+            return (
+              <TabsContent key={level} value={level.toString()}>
+                {!hasWords ? (
+                  <Card className="shadow-lg border-0">
+                    <CardContent className="text-center py-12">
+                      <BookOpen className="w-12 h-12 text-gray-400 mx-auto mb-4" />
+                      <h3 className="text-lg font-semibold text-gray-800 mb-2">No words found</h3>
+                      <p className="text-gray-600">
+                        {searchTerm || selectedCategory !== 'all'
+                          ? 'Try adjusting your search or filter criteria.'
+                          : 'No words available for this level.'}
+                      </p>
                     </CardContent>
                   </Card>
-                ))}
-              </div>
-            </TabsContent>
-          ))}
+                ) : (
+                  <div className="space-y-6">
+                    {Object.entries(filteredWords).map(([categoryName, words]) => (
+                      <Card key={categoryName} className="shadow-lg border-0 bg-gradient-to-br from-white to-gray-50/50">
+                        <CardHeader className="pb-4">
+                          <CardTitle className="text-lg flex items-center">
+                            <span className="text-2xl mr-2">
+                              {categories.find(cat => cat.name === categoryName)?.icon || '📝'}
+                            </span>
+                            {categoryName}
+                            <Badge variant="outline" className="ml-2">
+                              {words.length} words
+                            </Badge>
+                          </CardTitle>
+                        </CardHeader>
+                        <CardContent>
+                          <div className="flex flex-wrap gap-2">
+                            {words.map((word) => (
+                              <WordBadge
+                                key={word.id}
+                                word={word}
+                                isKnown={knownWords.some(kw => kw.id === word.id)}
+                                onStatusChange={handleWordStatusChange}
+                              />
+                            ))}
+                          </div>
+                        </CardContent>
+                      </Card>
+                    ))}
+                  </div>
+                )}
+              </TabsContent>
+            );
+          })}
         </Tabs>
       </div>
     </div>
