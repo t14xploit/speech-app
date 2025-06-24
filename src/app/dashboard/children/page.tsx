@@ -7,20 +7,31 @@ import { headers } from "next/headers";
 import { redirect } from "next/navigation";
 import ChildrenList from "@/components/children/ChildrenList";
 
+// Force dynamic rendering
+export const dynamic = 'force-dynamic';
+
 export default async function ChildrenPage() {
   // Check if user is signed in on server side
-  const session = await auth.api.getSession({
-    headers: await headers(),
-  });
+  let session;
+  let children = [];
 
-  console.log('Server session in children page:', session?.user?.id ? `Found: ${session.user.id}` : 'Not found');
+  try {
+    session = await auth.api.getSession({
+      headers: await headers(),
+    });
 
-  if (!session?.user) {
+    if (!session?.user) {
+      redirect('/signin');
+    }
+
+    // Get children for the current user
+    const result = await getChildrenAction();
+    children = result.children || [];
+  } catch (error) {
+    console.error('Error in children page:', error);
+    // During build time, redirect to signin
     redirect('/signin');
   }
-
-  // Get children for the current user
-  const { children } = await getChildrenAction();
   return (
     <div className="min-h-screen bg-gradient-to-br from-blue-50 via-purple-50 to-pink-50 p-4">
       <div className="max-w-6xl mx-auto">

@@ -8,18 +8,31 @@ import { auth } from "@/lib/auth";
 import { headers } from "next/headers";
 import { redirect } from "next/navigation";
 
+// Force dynamic rendering
+export const dynamic = 'force-dynamic';
+
 export default async function ExercisesPage() {
   // Check if user is signed in
-  const session = await auth.api.getSession({
-    headers: await headers(),
-  });
+  let session;
+  let children = [];
 
-  if (!session?.user) {
+  try {
+    session = await auth.api.getSession({
+      headers: await headers(),
+    });
+
+    if (!session?.user) {
+      redirect('/signin');
+    }
+
+    // Get children data
+    const result = await getChildrenAction();
+    children = result.children || [];
+  } catch (error) {
+    console.error('Error in exercises page:', error);
+    // During build time, redirect to signin
     redirect('/signin');
   }
-
-  // Get children data
-  const { children } = await getChildrenAction();
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-blue-50 via-purple-50 to-pink-50">
