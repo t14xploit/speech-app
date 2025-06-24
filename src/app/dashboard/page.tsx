@@ -79,50 +79,58 @@ export default async function DashboardPage() {
       <div className="max-w-7xl mx-auto px-4 py-8">
         {/* Overview Stats */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
-          <Card className="shadow-lg border-0 bg-gradient-to-br from-blue-500 to-blue-600 text-white">
+          <Card className="shadow-lg border-0 bg-white hover:shadow-xl transition-shadow">
             <CardContent className="p-6">
               <div className="flex items-center justify-between">
                 <div>
-                  <p className="text-blue-100 text-sm font-medium">Total Children</p>
-                  <p className="text-3xl font-bold">{totalChildren}</p>
+                  <p className="text-gray-600 text-sm font-medium">Total Children</p>
+                  <p className="text-3xl font-bold text-gray-800">{totalChildren}</p>
                 </div>
-                <Users className="w-8 h-8 text-blue-200" />
+                <div className="w-12 h-12 bg-blue-100 rounded-lg flex items-center justify-center">
+                  <Users className="w-6 h-6 text-blue-600" />
+                </div>
               </div>
             </CardContent>
           </Card>
 
-          <Card className="shadow-lg border-0 bg-gradient-to-br from-green-500 to-green-600 text-white">
+          <Card className="shadow-lg border-0 bg-white hover:shadow-xl transition-shadow">
             <CardContent className="p-6">
               <div className="flex items-center justify-between">
                 <div>
-                  <p className="text-green-100 text-sm font-medium">Words Learned</p>
-                  <p className="text-3xl font-bold">{totalWords}</p>
+                  <p className="text-gray-600 text-sm font-medium">Words Learned</p>
+                  <p className="text-3xl font-bold text-gray-800">{totalWords}</p>
                 </div>
-                <BookOpen className="w-8 h-8 text-green-200" />
+                <div className="w-12 h-12 bg-green-100 rounded-lg flex items-center justify-center">
+                  <BookOpen className="w-6 h-6 text-green-600" />
+                </div>
               </div>
             </CardContent>
           </Card>
 
-          <Card className="shadow-lg border-0 bg-gradient-to-br from-purple-500 to-purple-600 text-white">
+          <Card className="shadow-lg border-0 bg-white hover:shadow-xl transition-shadow">
             <CardContent className="p-6">
               <div className="flex items-center justify-between">
                 <div>
-                  <p className="text-purple-100 text-sm font-medium">Exercises Done</p>
-                  <p className="text-3xl font-bold">{totalExercises}</p>
+                  <p className="text-gray-600 text-sm font-medium">Exercises Done</p>
+                  <p className="text-3xl font-bold text-gray-800">{totalExercises}</p>
                 </div>
-                <TrendingUp className="w-8 h-8 text-purple-200" />
+                <div className="w-12 h-12 bg-purple-100 rounded-lg flex items-center justify-center">
+                  <TrendingUp className="w-6 h-6 text-purple-600" />
+                </div>
               </div>
             </CardContent>
           </Card>
 
-          <Card className="shadow-lg border-0 bg-gradient-to-br from-orange-500 to-orange-600 text-white">
+          <Card className="shadow-lg border-0 bg-white hover:shadow-xl transition-shadow">
             <CardContent className="p-6">
               <div className="flex items-center justify-between">
                 <div>
-                  <p className="text-orange-100 text-sm font-medium">Avg Progress</p>
-                  <p className="text-3xl font-bold">{averageProgress}%</p>
+                  <p className="text-gray-600 text-sm font-medium">Avg Progress</p>
+                  <p className="text-3xl font-bold text-gray-800">{averageProgress}%</p>
                 </div>
-                <BarChart3 className="w-8 h-8 text-orange-200" />
+                <div className="w-12 h-12 bg-orange-100 rounded-lg flex items-center justify-center">
+                  <BarChart3 className="w-6 h-6 text-orange-600" />
+                </div>
               </div>
             </CardContent>
           </Card>
@@ -250,20 +258,24 @@ export default async function DashboardPage() {
                     Add New Child
                   </Button>
                 </Link>
-                <Link href="/dashboard/children">
+                <Link href="/dashboard/vocabulary">
                   <Button variant="outline" className="w-full justify-start">
                     <BookOpen className="w-4 h-4 mr-2" />
                     Vocabulary Builder
                   </Button>
                 </Link>
-                <Button variant="outline" className="w-full justify-start">
-                  <TrendingUp className="w-4 h-4 mr-2" />
-                  Start Exercises
-                </Button>
-                <Button variant="outline" className="w-full justify-start">
-                  <BarChart3 className="w-4 h-4 mr-2" />
-                  View Progress
-                </Button>
+                <Link href="/dashboard/exercises">
+                  <Button variant="outline" className="w-full justify-start">
+                    <TrendingUp className="w-4 h-4 mr-2" />
+                    Start Exercises
+                  </Button>
+                </Link>
+                <Link href="/dashboard/progress">
+                  <Button variant="outline" className="w-full justify-start">
+                    <BarChart3 className="w-4 h-4 mr-2" />
+                    View Progress
+                  </Button>
+                </Link>
               </CardContent>
             </Card>
 
