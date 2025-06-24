@@ -18,7 +18,7 @@ export default async function SignInPage() {
             <span className="text-4xl">🗣️</span>
           </div>
           <h1 className="text-4xl font-bold bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent mb-2">
-            SpeechBuddy
+            TinyTalker
           </h1>
           <p className="text-gray-600 text-lg">
             Welcome back! Continue your child&apos;s speech journey
@@ -34,7 +34,7 @@ export default async function SignInPage() {
         <div className="text-center">
           <Alert className="bg-blue-50 border-blue-200">
             <Bell className="h-4 w-4 text-blue-600" />
-            <AlertTitle className="text-blue-800">New to SpeechBuddy?</AlertTitle>
+            <AlertTitle className="text-blue-800">New to TinyTalker?</AlertTitle>
             <AlertDescription className="text-blue-700">
               <div className="flex items-center justify-between mt-2">
                 <span>Create an account to get started</span>

@@ -47,21 +47,21 @@ export default async function ProgressPage() {
       <div className="max-w-7xl mx-auto px-4 py-8">
         {/* Overall Statistics */}
         <div className="grid grid-cols-1 md:grid-cols-4 gap-6 mb-8">
-          <Card className="shadow-lg border-0 bg-white hover:shadow-xl transition-shadow">
+          <Card className="shadow-lg border-0 bg-gradient-to-br from-blue-100/60 via-blue-50/40 to-white hover:shadow-xl hover:from-blue-100/80 transition-all duration-300">
             <CardContent className="p-6">
               <div className="flex items-center justify-between">
                 <div>
                   <p className="text-gray-600 text-sm font-medium">Total Children</p>
                   <p className="text-3xl font-bold text-gray-800">{children.length}</p>
                 </div>
-                <div className="w-12 h-12 bg-blue-100 rounded-lg flex items-center justify-center">
-                  <Users className="w-6 h-6 text-blue-600" />
+                <div className="w-12 h-12 bg-gradient-to-br from-blue-200 to-blue-300 rounded-lg flex items-center justify-center shadow-sm">
+                  <Users className="w-6 h-6 text-blue-700" />
                 </div>
               </div>
             </CardContent>
           </Card>
 
-          <Card className="shadow-lg border-0 bg-white hover:shadow-xl transition-shadow">
+          <Card className="shadow-lg border-0 bg-gradient-to-br from-green-100/60 via-green-50/40 to-white hover:shadow-xl hover:from-green-100/80 transition-all duration-300">
             <CardContent className="p-6">
               <div className="flex items-center justify-between">
                 <div>
@@ -70,14 +70,14 @@ export default async function ProgressPage() {
                     {children.reduce((sum, child) => sum + (child.stats?.knownWords || 0), 0)}
                   </p>
                 </div>
-                <div className="w-12 h-12 bg-green-100 rounded-lg flex items-center justify-center">
-                  <TrendingUp className="w-6 h-6 text-green-600" />
+                <div className="w-12 h-12 bg-gradient-to-br from-green-200 to-green-300 rounded-lg flex items-center justify-center shadow-sm">
+                  <TrendingUp className="w-6 h-6 text-green-700" />
                 </div>
               </div>
             </CardContent>
           </Card>
 
-          <Card className="shadow-lg border-0 bg-white hover:shadow-xl transition-shadow">
+          <Card className="shadow-lg border-0 bg-gradient-to-br from-purple-100/60 via-purple-50/40 to-white hover:shadow-xl hover:from-purple-100/80 transition-all duration-300">
             <CardContent className="p-6">
               <div className="flex items-center justify-between">
                 <div>
@@ -86,14 +86,14 @@ export default async function ProgressPage() {
                     {children.reduce((sum, child) => sum + (child.stats?.exercises || 0), 0)}
                   </p>
                 </div>
-                <div className="w-12 h-12 bg-purple-100 rounded-lg flex items-center justify-center">
-                  <BarChart3 className="w-6 h-6 text-purple-600" />
+                <div className="w-12 h-12 bg-gradient-to-br from-purple-200 to-purple-300 rounded-lg flex items-center justify-center shadow-sm">
+                  <BarChart3 className="w-6 h-6 text-purple-700" />
                 </div>
               </div>
             </CardContent>
           </Card>
 
-          <Card className="shadow-lg border-0 bg-white hover:shadow-xl transition-shadow">
+          <Card className="shadow-lg border-0 bg-gradient-to-br from-orange-100/60 via-orange-50/40 to-white hover:shadow-xl hover:from-orange-100/80 transition-all duration-300">
             <CardContent className="p-6">
               <div className="flex items-center justify-between">
                 <div>
@@ -102,8 +102,8 @@ export default async function ProgressPage() {
                     {children.length > 0 ? Math.round((children.reduce((sum, child) => sum + (child.stats?.knownWords || 0), 0) / children.length) * 2) : 0}%
                   </p>
                 </div>
-                <div className="w-12 h-12 bg-orange-100 rounded-lg flex items-center justify-center">
-                  <Calendar className="w-6 h-6 text-orange-600" />
+                <div className="w-12 h-12 bg-gradient-to-br from-orange-200 to-orange-300 rounded-lg flex items-center justify-center shadow-sm">
+                  <Calendar className="w-6 h-6 text-orange-700" />
                 </div>
               </div>
             </CardContent>

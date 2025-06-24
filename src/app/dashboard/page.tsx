@@ -54,7 +54,7 @@ export default async function DashboardPage() {
               </div>
               <div>
                 <h1 className="text-2xl font-bold bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent">
-                  SpeechBuddy
+                  TinyTalker
                 </h1>
                 <p className="text-sm text-gray-600">Welcome back, {session.user.name || 'Parent'}!</p>
               </div>
@@ -79,57 +79,57 @@ export default async function DashboardPage() {
       <div className="max-w-7xl mx-auto px-4 py-8">
         {/* Overview Stats */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
-          <Card className="shadow-lg border-0 bg-white hover:shadow-xl transition-shadow">
+          <Card className="shadow-lg border-0 bg-gradient-to-br from-blue-100/60 via-blue-50/40 to-white hover:shadow-xl hover:from-blue-100/80 transition-all duration-300">
             <CardContent className="p-6">
               <div className="flex items-center justify-between">
                 <div>
                   <p className="text-gray-600 text-sm font-medium">Total Children</p>
                   <p className="text-3xl font-bold text-gray-800">{totalChildren}</p>
                 </div>
-                <div className="w-12 h-12 bg-blue-100 rounded-lg flex items-center justify-center">
-                  <Users className="w-6 h-6 text-blue-600" />
+                <div className="w-12 h-12 bg-gradient-to-br from-blue-200 to-blue-300 rounded-lg flex items-center justify-center shadow-sm">
+                  <Users className="w-6 h-6 text-blue-700" />
                 </div>
               </div>
             </CardContent>
           </Card>
 
-          <Card className="shadow-lg border-0 bg-white hover:shadow-xl transition-shadow">
+          <Card className="shadow-lg border-0 bg-gradient-to-br from-green-100/60 via-green-50/40 to-white hover:shadow-xl hover:from-green-100/80 transition-all duration-300">
             <CardContent className="p-6">
               <div className="flex items-center justify-between">
                 <div>
                   <p className="text-gray-600 text-sm font-medium">Words Learned</p>
                   <p className="text-3xl font-bold text-gray-800">{totalWords}</p>
                 </div>
-                <div className="w-12 h-12 bg-green-100 rounded-lg flex items-center justify-center">
-                  <BookOpen className="w-6 h-6 text-green-600" />
+                <div className="w-12 h-12 bg-gradient-to-br from-green-200 to-green-300 rounded-lg flex items-center justify-center shadow-sm">
+                  <BookOpen className="w-6 h-6 text-green-700" />
                 </div>
               </div>
             </CardContent>
           </Card>
 
-          <Card className="shadow-lg border-0 bg-white hover:shadow-xl transition-shadow">
+          <Card className="shadow-lg border-0 bg-gradient-to-br from-purple-100/60 via-purple-50/40 to-white hover:shadow-xl hover:from-purple-100/80 transition-all duration-300">
             <CardContent className="p-6">
               <div className="flex items-center justify-between">
                 <div>
                   <p className="text-gray-600 text-sm font-medium">Exercises Done</p>
                   <p className="text-3xl font-bold text-gray-800">{totalExercises}</p>
                 </div>
-                <div className="w-12 h-12 bg-purple-100 rounded-lg flex items-center justify-center">
-                  <TrendingUp className="w-6 h-6 text-purple-600" />
+                <div className="w-12 h-12 bg-gradient-to-br from-purple-200 to-purple-300 rounded-lg flex items-center justify-center shadow-sm">
+                  <TrendingUp className="w-6 h-6 text-purple-700" />
                 </div>
               </div>
             </CardContent>
           </Card>
 
-          <Card className="shadow-lg border-0 bg-white hover:shadow-xl transition-shadow">
+          <Card className="shadow-lg border-0 bg-gradient-to-br from-orange-100/60 via-orange-50/40 to-white hover:shadow-xl hover:from-orange-100/80 transition-all duration-300">
             <CardContent className="p-6">
               <div className="flex items-center justify-between">
                 <div>
                   <p className="text-gray-600 text-sm font-medium">Avg Progress</p>
                   <p className="text-3xl font-bold text-gray-800">{averageProgress}%</p>
                 </div>
-                <div className="w-12 h-12 bg-orange-100 rounded-lg flex items-center justify-center">
-                  <BarChart3 className="w-6 h-6 text-orange-600" />
+                <div className="w-12 h-12 bg-gradient-to-br from-orange-200 to-orange-300 rounded-lg flex items-center justify-center shadow-sm">
+                  <BarChart3 className="w-6 h-6 text-orange-700" />
                 </div>
               </div>
             </CardContent>
@@ -141,7 +141,7 @@ export default async function DashboardPage() {
           {/* Left Column - Children Overview */}
           <div className="lg:col-span-2 space-y-6">
             {/* Children Overview */}
-            <Card className="shadow-lg border-0">
+            <Card className="shadow-lg border-0 bg-gradient-to-br from-slate-50/60 via-white to-blue-50/30 hover:shadow-xl transition-all duration-300">
               <CardHeader className="flex flex-row items-center justify-between">
                 <CardTitle className="text-xl text-gray-800 flex items-center">
                   <Users className="w-5 h-5 mr-2" />
@@ -206,7 +206,7 @@ export default async function DashboardPage() {
             </Card>
 
             {/* Recent Activity */}
-            <Card className="shadow-lg border-0">
+            <Card className="shadow-lg border-0 bg-gradient-to-br from-green-50/40 via-white to-emerald-50/30 hover:shadow-xl transition-all duration-300">
               <CardHeader>
                 <CardTitle className="text-xl text-gray-800 flex items-center">
                   <Activity className="w-5 h-5 mr-2" />
@@ -247,7 +247,7 @@ export default async function DashboardPage() {
           {/* Right Column - Quick Actions & Progress */}
           <div className="space-y-6">
             {/* Quick Actions */}
-            <Card className="shadow-lg border-0">
+            <Card className="shadow-lg border-0 bg-gradient-to-br from-purple-50/40 via-white to-pink-50/30 hover:shadow-xl transition-all duration-300">
               <CardHeader>
                 <CardTitle className="text-xl text-gray-800">Quick Actions</CardTitle>
               </CardHeader>
@@ -280,7 +280,7 @@ export default async function DashboardPage() {
             </Card>
 
             {/* Progress Overview */}
-            <Card className="shadow-lg border-0">
+            <Card className="shadow-lg border-0 bg-gradient-to-br from-amber-50/40 via-white to-yellow-50/30 hover:shadow-xl transition-all duration-300">
               <CardHeader>
                 <CardTitle className="text-xl text-gray-800 flex items-center">
                   <Award className="w-5 h-5 mr-2" />
