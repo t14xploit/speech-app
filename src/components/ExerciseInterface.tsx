@@ -56,7 +56,7 @@ export default function ExerciseInterface({ exercise, onComplete, onSkip }: Exer
 
     // Calculate score based on exercise type
     if (exercise.type === 'WORD_RECOGNITION') {
-      const content = exercise.content as WordRecognitionContent;
+      const content = exercise.content as unknown as WordRecognitionContent;
       const correctImages = content.images.filter(img => img.isCorrect);
       const selectedCorrect = selectedAnswers.filter(answer => 
         correctImages.some(img => img.url === answer)
@@ -94,7 +94,7 @@ export default function ExerciseInterface({ exercise, onComplete, onSkip }: Exer
   };
 
   const renderWordRecognition = () => {
-    const content = exercise.content as WordRecognitionContent;
+    const content = exercise.content as unknown as WordRecognitionContent;
     
     return (
       <div className="space-y-6">
@@ -147,7 +147,7 @@ export default function ExerciseInterface({ exercise, onComplete, onSkip }: Exer
   };
 
   const renderPronunciation = () => {
-    const content = exercise.content as PronunciationContent;
+    const content = exercise.content as unknown as PronunciationContent;
     
     return (
       <div className="space-y-6 text-center">
@@ -202,7 +202,7 @@ export default function ExerciseInterface({ exercise, onComplete, onSkip }: Exer
   };
 
   const renderMatching = () => {
-    const content = exercise.content as MatchingContent;
+    const content = exercise.content as unknown as MatchingContent;
     
     return (
       <div className="space-y-6">

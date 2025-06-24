@@ -22,7 +22,7 @@ function calculateSpeechLevel(birthDate: Date): number {
   return 3;                            // 3+ years
 }
 
-export async function addChildAction(prevState: any, formData: FormData) {
+export async function addChildAction(prevState: unknown, formData: FormData) {
   const rawData = {
     name: formData.get('name') as string,
     birthDate: formData.get('birthDate') as string,
@@ -217,7 +217,7 @@ export async function deleteChildAction(childId: string) {
   }
 }
 
-export async function updateChildLevelAction(prevState: any, formData: FormData) {
+export async function updateChildLevelAction(prevState: unknown, formData: FormData) {
   console.log('updateChildLevelAction called');
 
   const childId = formData.get('childId') as string;

@@ -20,15 +20,15 @@ interface Word {
   category: {
     id: string;
     name: string;
-    icon: string;
+    icon: string | null;
   };
 }
 
 interface Category {
   id: string;
   name: string;
-  description: string;
-  icon: string;
+  description: string | null;
+  icon: string | null;
   words: Word[];
 }
 
