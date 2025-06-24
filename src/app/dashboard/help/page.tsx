@@ -13,7 +13,7 @@ export default function HelpPage() {
               ❓ Help & Support
             </h1>
             <p className="text-gray-600">
-              Get help and learn how to use SpeechBuddy effectively
+              Get help and learn how to use TinyTalker effectively
             </p>
           </div>
           <Link href="/dashboard">
@@ -51,7 +51,7 @@ export default function HelpPage() {
             </CardHeader>
             <CardContent>
               <p className="text-gray-600 mb-4">
-                Comprehensive guide on using all features of SpeechBuddy effectively.
+                Comprehensive guide on using all features of TinyTalker effectively.
               </p>
               <Button className="w-full bg-green-600 hover:bg-green-700">
                 View User Guide

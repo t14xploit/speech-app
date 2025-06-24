@@ -7,7 +7,7 @@ export default function Home() {
       <div className="container mx-auto px-4 py-16">
         <div className="text-center mb-16">
           <h1 className="text-5xl md:text-6xl font-bold text-gray-800 mb-6">
-            🗣️ SpeechBuddy
+            🗣️ TinyTalker
           </h1>
           <p className="text-xl md:text-2xl text-gray-600 mb-8 max-w-3xl mx-auto">
             A comprehensive speech therapy app for busy parents helping children with speech delays
@@ -42,7 +42,7 @@ export default function Home() {
             <div className="text-4xl mb-4">🧩</div>
             <h3 className="text-xl font-semibold text-gray-800 mb-2">Exercises</h3>
             <p className="text-gray-600">
-              Interactive exercises tailored to your child's level with word recognition, pronunciation, and more.
+              Interactive exercises tailored to your child&apos;s level with word recognition, pronunciation, and more.
             </p>
           </div>
 
@@ -104,7 +104,7 @@ export default function Home() {
           <h2 className="text-3xl font-bold mb-4">🔬 Research-Based Approach</h2>
           <p className="text-lg mb-6 max-w-2xl mx-auto">
             Our vocabulary and exercises are based on established speech development milestones from
-            Speech and Language UK and Stanford Children's Health research.
+            Speech and Language UK and Stanford Children&apos;s Health research.
           </p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
             <a
@@ -121,7 +121,7 @@ export default function Home() {
               rel="noopener noreferrer"
               className="bg-white text-purple-600 px-6 py-3 rounded-xl font-semibold hover:bg-gray-100 transition-colors"
             >
-              Stanford Children's Health
+              Stanford Children&apos;s Health
             </a>
           </div>
         </div>
