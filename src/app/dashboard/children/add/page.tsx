@@ -105,19 +105,22 @@ export default function AddChildPage() {
                 </p>
               </div>
 
-              <div className="bg-blue-50 p-4 rounded-lg">
-                <h3 className="font-semibold text-blue-800 mb-2">
-                  📊 Automatic Level Assessment
+              <div className="bg-amber-50 p-4 rounded-lg border border-amber-200">
+                <h3 className="font-semibold text-amber-800 mb-2">
+                  📊 Initial Level Assessment
                 </h3>
-                <p className="text-sm text-blue-700">
-                  Based on your child&apos;s age, we&apos;ll automatically assign them to the appropriate speech development level:
+                <p className="text-sm text-amber-700">
+                  Based on your child&apos;s age, we&apos;ll suggest a starting level. However, since every child develops at their own pace, especially those with speech delays, you&apos;ll be able to adjust the level after reviewing vocabulary categories and words.
                 </p>
-                <ul className="text-sm text-blue-700 mt-2 space-y-1">
-                  <li><strong>Level 0:</strong> 0-12 months (0-10 words)</li>
-                  <li><strong>Level 1:</strong> 12-24 months (10-50 words)</li>
-                  <li><strong>Level 2:</strong> 2-3 years (50-200 words)</li>
-                  <li><strong>Level 3:</strong> 3+ years (200+ words)</li>
+                <ul className="text-sm text-amber-700 mt-2 space-y-1">
+                  <li><strong>Level 0:</strong> Early sounds and first words (0-10 words)</li>
+                  <li><strong>Level 1:</strong> Single words and simple phrases (10-50 words)</li>
+                  <li><strong>Level 2:</strong> Word combinations and short sentences (50-200 words)</li>
+                  <li><strong>Level 3:</strong> Complex speech and conversations (200+ words)</li>
                 </ul>
+                <p className="text-sm text-amber-700 mt-2 font-medium">
+                  💡 After adding your child, you&apos;ll complete a vocabulary assessment to set the most appropriate level.
+                </p>
               </div>
 
               <SubmitButton />

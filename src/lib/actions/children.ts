@@ -47,23 +47,23 @@ export async function addChildAction(prevState: any, formData: FormData) {
       };
     }
 
-    // Parse birth date and calculate level
+    // Parse birth date and calculate suggested level
     const birthDate = new Date(validatedData.data.birthDate);
-    const level = calculateSpeechLevel(birthDate);
+    const suggestedLevel = calculateSpeechLevel(birthDate);
 
     console.log('Adding child:', {
       name: validatedData.data.name,
       birthDate: birthDate.toISOString(),
-      level,
+      suggestedLevel,
       userId: session.user.id
     });
 
-    // Create child in database
+    // Create child in database with suggested level (parent will assess actual level)
     const child = await prisma.child.create({
       data: {
         name: validatedData.data.name,
         birthDate: birthDate,
-        level: level,
+        level: suggestedLevel, // This will be updated after assessment
         userId: session.user.id,
       },
     });
@@ -146,6 +146,54 @@ export async function deleteChildAction(childId: string) {
     console.error('Delete child error:', error);
     return {
       error: 'An error occurred while deleting the child',
+    };
+  }
+}
+
+export async function updateChildLevelAction(childId: string, level: number) {
+  try {
+    // Get current user session
+    const session = await auth.api.getSession({
+      headers: await headers()
+    });
+
+    if (!session?.user?.id) {
+      return {
+        error: 'You must be signed in to update a child',
+      };
+    }
+
+    // Verify child belongs to current user
+    const child = await prisma.child.findFirst({
+      where: {
+        id: childId,
+        userId: session.user.id,
+      },
+    });
+
+    if (!child) {
+      return {
+        error: 'Child not found or you do not have permission to update this child',
+      };
+    }
+
+    // Update child level
+    await prisma.child.update({
+      where: {
+        id: childId,
+      },
+      data: {
+        level: level,
+      },
+    });
+
+    console.log(`Updated child ${childId} to level ${level}`);
+
+    return { success: true };
+  } catch (error) {
+    console.error('Update child level error:', error);
+    return {
+      error: 'An error occurred while updating the child level',
     };
   }
 }

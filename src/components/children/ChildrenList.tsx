@@ -4,7 +4,8 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { AlertDialog, AlertDialogAction, AlertDialogCancel, AlertDialogContent, AlertDialogDescription, AlertDialogFooter, AlertDialogHeader, AlertDialogTitle, AlertDialogTrigger } from "@/components/ui/alert-dialog";
-import { Trash2, Calendar, TrendingUp } from "lucide-react";
+import { Trash2, Calendar, TrendingUp, Target } from "lucide-react";
+import Link from "next/link";
 import { deleteChildAction } from "@/lib/actions/children";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
@@ -41,34 +42,34 @@ function calculateAge(birthDate: Date): string {
 function getLevelInfo(level: number): { name: string; description: string; color: string } {
   switch (level) {
     case 0:
-      return { 
-        name: "Level 0", 
-        description: "Early sounds (0-10 words)", 
-        color: "bg-blue-100 text-blue-800" 
+      return {
+        name: "Level 0",
+        description: "Early sounds and first words",
+        color: "bg-blue-100 text-blue-800"
       };
     case 1:
-      return { 
-        name: "Level 1", 
-        description: "First words (10-50 words)", 
-        color: "bg-green-100 text-green-800" 
+      return {
+        name: "Level 1",
+        description: "Single words and simple phrases",
+        color: "bg-green-100 text-green-800"
       };
     case 2:
-      return { 
-        name: "Level 2", 
-        description: "Word combinations (50-200 words)", 
-        color: "bg-orange-100 text-orange-800" 
+      return {
+        name: "Level 2",
+        description: "Word combinations and short sentences",
+        color: "bg-orange-100 text-orange-800"
       };
     case 3:
-      return { 
-        name: "Level 3", 
-        description: "Complex speech (200+ words)", 
-        color: "bg-purple-100 text-purple-800" 
+      return {
+        name: "Level 3",
+        description: "Complex speech and conversations",
+        color: "bg-purple-100 text-purple-800"
       };
     default:
-      return { 
-        name: "Unknown", 
-        description: "Assessment needed", 
-        color: "bg-gray-100 text-gray-800" 
+      return {
+        name: "Assessment Needed",
+        description: "Please complete level assessment",
+        color: "bg-amber-100 text-amber-800"
       };
   }
 }
@@ -154,11 +155,18 @@ export default function ChildrenList({ children }: ChildrenListProps) {
                 </p>
                 
                 <div className="space-y-3">
+                  <Link href={`/dashboard/children/${child.id}/assess-level`}>
+                    <Button className="w-full bg-amber-600 hover:bg-amber-700" size="sm">
+                      <Target className="w-4 h-4 mr-2" />
+                      Assess Level
+                    </Button>
+                  </Link>
+
                   <Button className="w-full bg-green-600 hover:bg-green-700" size="sm">
                     <TrendingUp className="w-4 h-4 mr-2" />
                     Start Exercises
                   </Button>
-                  
+
                   <div className="grid grid-cols-2 gap-2">
                     <Button variant="outline" size="sm" className="text-xs">
                       View Progress
