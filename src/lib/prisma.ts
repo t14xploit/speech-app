@@ -1,11 +1,17 @@
 import { PrismaClient } from "@/generated/prisma";
 
-const prisma = global.__prisma || new PrismaClient();
-
-declare global {
-   
-  var __prisma: PrismaClient | undefined;
+const globalForPrisma = globalThis as unknown as {
+  prisma: PrismaClient | undefined
 }
 
-if (process.env.NODE_ENV !== "production") global.__prisma = prisma;
-export { prisma };
+// Create Prisma client with better error handling for Netlify
+export const prisma = globalForPrisma.prisma ?? new PrismaClient({
+  log: process.env.NODE_ENV === 'development' ? ['query', 'error', 'warn'] : ['error'],
+})
+
+if (process.env.NODE_ENV !== 'production') globalForPrisma.prisma = prisma
+
+// Graceful shutdown
+process.on('beforeExit', async () => {
+  await prisma.$disconnect()
+})

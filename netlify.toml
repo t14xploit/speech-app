@@ -1,0 +1,22 @@
+[build]
+  command = "npm run build"
+  publish = ".next"
+
+[build.environment]
+  # Disable Prisma telemetry during build
+  CHECKPOINT_DISABLE = "1"
+  # Skip Prisma postinstall script during npm install
+  PRISMA_SKIP_POSTINSTALL_GENERATE = "true"
+
+[[plugins]]
+  package = "@netlify/plugin-nextjs"
+
+[functions]
+  # Increase function timeout for database operations
+  timeout = 30
+
+# Redirect all requests to Next.js for client-side routing
+[[redirects]]
+  from = "/*"
+  to = "/index.html"
+  status = 200
