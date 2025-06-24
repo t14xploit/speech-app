@@ -1,8 +1,11 @@
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
+import { getChildrenAction } from "@/lib/actions/children";
+import ChildrenList from "@/components/children/ChildrenList";
 
-export default function ChildrenPage() {
+export default async function ChildrenPage() {
+  const { children } = await getChildrenAction();
   return (
     <div className="min-h-screen bg-gradient-to-br from-blue-50 via-purple-50 to-pink-50 p-4">
       <div className="max-w-6xl mx-auto">
@@ -22,27 +25,35 @@ export default function ChildrenPage() {
                 ← Back to Dashboard
               </Button>
             </Link>
-            <Button className="bg-blue-600 hover:bg-blue-700">
-              + Add Child
-            </Button>
+            <Link href="/dashboard/children/add">
+              <Button className="bg-blue-600 hover:bg-blue-700">
+                + Add Child
+              </Button>
+            </Link>
           </div>
         </div>
 
-        {/* Empty State */}
-        <Card className="shadow-lg border-0 text-center py-12">
-          <CardContent>
-            <div className="text-6xl mb-4">👶</div>
-            <h3 className="text-2xl font-semibold text-gray-800 mb-2">
-              No children added yet
-            </h3>
-            <p className="text-gray-600 mb-6 max-w-md mx-auto">
-              Start by adding your child&apos;s profile to begin tracking their speech development journey.
-            </p>
-            <Button className="bg-blue-600 hover:bg-blue-700">
-              Add Your First Child
-            </Button>
-          </CardContent>
-        </Card>
+        {/* Children List or Empty State */}
+        {children.length === 0 ? (
+          <Card className="shadow-lg border-0 text-center py-12">
+            <CardContent>
+              <div className="text-6xl mb-4">👶</div>
+              <h3 className="text-2xl font-semibold text-gray-800 mb-2">
+                No children added yet
+              </h3>
+              <p className="text-gray-600 mb-6 max-w-md mx-auto">
+                Start by adding your child&apos;s profile to begin tracking their speech development journey.
+              </p>
+              <Link href="/dashboard/children/add">
+                <Button className="bg-blue-600 hover:bg-blue-700">
+                  Add Your First Child
+                </Button>
+              </Link>
+            </CardContent>
+          </Card>
+        ) : (
+          <ChildrenList children={children} />
+        )}
 
         {/* Features Info */}
         <div className="mt-8 grid grid-cols-1 md:grid-cols-3 gap-6">
