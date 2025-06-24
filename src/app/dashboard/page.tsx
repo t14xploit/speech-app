@@ -1,9 +1,22 @@
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { signOutAction } from "@/lib/actions/auth";
+import { auth } from "@/lib/auth";
+import { headers } from "next/headers";
+import { redirect } from "next/navigation";
 import Link from "next/link";
 
-export default function DashboardPage() {
+export default async function DashboardPage() {
+  // Check if user is signed in on server side
+  const session = await auth.api.getSession({
+    headers: await headers(),
+  });
+
+  console.log('Server session in dashboard:', session?.user?.id ? `Found: ${session.user.id}` : 'Not found');
+
+  if (!session?.user) {
+    redirect('/signin');
+  }
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-blue-50 via-purple-50 to-pink-50 p-4">

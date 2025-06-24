@@ -5,9 +5,10 @@ import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import Link from "next/link";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
-import { CheckCircle, Circle } from "lucide-react";
+import { useActionState, useFormStatus } from "react-dom";
+import { CheckCircle, Circle, Loader2 } from "lucide-react";
 import { updateChildLevelAction } from "@/lib/actions/children";
 
 interface LevelData {
@@ -142,29 +143,38 @@ const levelData: LevelData[] = [
   }
 ];
 
+function ConfirmButton({ selectedLevel }: { selectedLevel: number | null }) {
+  const { pending } = useFormStatus();
+
+  return (
+    <Button
+      type="submit"
+      disabled={pending || selectedLevel === null}
+      className="bg-green-600 hover:bg-green-700"
+    >
+      {pending ? (
+        <>
+          <Loader2 className="w-4 h-4 mr-2 animate-spin" />
+          Saving...
+        </>
+      ) : (
+        'Confirm & Save Level'
+      )}
+    </Button>
+  );
+}
+
 export default function AssessLevelPage({ params }: { params: { id: string } }) {
   const [selectedLevel, setSelectedLevel] = useState<number | null>(null);
-  const [isUpdating, setIsUpdating] = useState(false);
+  const [state, formAction] = useActionState(updateChildLevelAction, { error: "" });
   const router = useRouter();
 
-  const handleConfirmLevel = async () => {
-    if (selectedLevel === null) return;
-
-    setIsUpdating(true);
-    try {
-      const result = await updateChildLevelAction(params.id, selectedLevel);
-      if (result.success) {
-        router.push('/dashboard/children');
-      } else {
-        console.error('Failed to update level:', result.error);
-        // You could show a toast notification here
-      }
-    } catch (error) {
-      console.error('Update error:', error);
-    } finally {
-      setIsUpdating(false);
+  // Handle successful level update
+  useEffect(() => {
+    if (state?.success) {
+      router.push('/dashboard/children');
     }
-  };
+  }, [state?.success, router]);
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-blue-50 via-purple-50 to-pink-50 p-4">
@@ -292,6 +302,12 @@ export default function AssessLevelPage({ params }: { params: { id: string } }) 
         {selectedLevel !== null && (
           <Card className="shadow-lg border-0 mt-8 bg-green-50 border-green-200">
             <CardContent className="p-6">
+              {state?.error && state.error !== "" && (
+                <div className="mb-4 p-3 bg-red-50 border border-red-200 rounded-md">
+                  <p className="text-red-700 text-sm">{state.error}</p>
+                </div>
+              )}
+
               <div className="flex justify-between items-center">
                 <div>
                   <h3 className="text-lg font-semibold text-green-800 mb-2">
@@ -301,13 +317,11 @@ export default function AssessLevelPage({ params }: { params: { id: string } }) 
                     You&apos;ve chosen {levelData[selectedLevel].name} - {levelData[selectedLevel].description}
                   </p>
                 </div>
-                <Button
-                  onClick={handleConfirmLevel}
-                  disabled={isUpdating}
-                  className="bg-green-600 hover:bg-green-700"
-                >
-                  {isUpdating ? 'Saving...' : 'Confirm & Save Level'}
-                </Button>
+                <form action={formAction}>
+                  <input type="hidden" name="childId" value={params.id} />
+                  <input type="hidden" name="level" value={selectedLevel.toString()} />
+                  <ConfirmButton selectedLevel={selectedLevel} />
+                </form>
               </div>
             </CardContent>
           </Card>

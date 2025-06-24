@@ -3,7 +3,7 @@
 import { z } from 'zod';
 import { prisma } from '@/lib/prisma';
 import { auth } from '@/lib/auth';
-import { headers } from 'next/headers';
+import { headers, cookies } from 'next/headers';
 
 const addChildSchema = z.object({
   name: z.string().min(1, 'Name is required').max(50, 'Name must be less than 50 characters'),
@@ -25,27 +25,28 @@ export async function addChildAction(prevState: any, formData: FormData) {
   const rawData = {
     name: formData.get('name') as string,
     birthDate: formData.get('birthDate') as string,
+    userId: formData.get('userId') as string,
   };
 
   // Validate input
-  const validatedData = addChildSchema.safeParse(rawData);
+  const validatedData = addChildSchema.safeParse({
+    name: rawData.name,
+    birthDate: rawData.birthDate,
+  });
+
   if (!validatedData.success) {
     return {
       error: validatedData.error.errors[0].message,
     };
   }
 
-  try {
-    // Get current user session
-    const session = await auth.api.getSession({
-      headers: await headers()
-    });
+  if (!rawData.userId) {
+    return {
+      error: 'User ID is required',
+    };
+  }
 
-    if (!session?.user?.id) {
-      return {
-        error: 'You must be signed in to add a child',
-      };
-    }
+  try {
 
     // Parse birth date and calculate suggested level
     const birthDate = new Date(validatedData.data.birthDate);
@@ -55,7 +56,7 @@ export async function addChildAction(prevState: any, formData: FormData) {
       name: validatedData.data.name,
       birthDate: birthDate.toISOString(),
       suggestedLevel,
-      userId: session.user.id
+      userId: rawData.userId
     });
 
     // Create child in database with suggested level (parent will assess actual level)
@@ -64,7 +65,7 @@ export async function addChildAction(prevState: any, formData: FormData) {
         name: validatedData.data.name,
         birthDate: birthDate,
         level: suggestedLevel, // This will be updated after assessment
-        userId: session.user.id,
+        userId: rawData.userId,
       },
     });
 
@@ -81,12 +82,17 @@ export async function addChildAction(prevState: any, formData: FormData) {
 
 export async function getChildrenAction() {
   try {
-    // Get current user session
+    console.log('getChildrenAction called');
+
+    // Get current user session (nextCookies plugin handles cookie management)
     const session = await auth.api.getSession({
-      headers: await headers()
+      headers: await headers(),
     });
 
+    console.log('getChildren session:', session?.user?.id ? `Found: ${session.user.id}` : 'Not found');
+
     if (!session?.user?.id) {
+      console.log('No session in getChildren');
       return { children: [] };
     }
 
@@ -107,11 +113,38 @@ export async function getChildrenAction() {
   }
 }
 
+// New action that accepts userId directly from client
+export async function getChildrenByUserIdAction(userId: string) {
+  try {
+    console.log('getChildrenByUserIdAction called for user:', userId);
+
+    if (!userId) {
+      return { children: [] };
+    }
+
+    // Get children for specified user
+    const children = await prisma.child.findMany({
+      where: {
+        userId: userId,
+      },
+      orderBy: {
+        createdAt: 'desc',
+      },
+    });
+
+    console.log('Found children:', children.length);
+    return { children };
+  } catch (error) {
+    console.error('Get children by userId error:', error);
+    return { children: [] };
+  }
+}
+
 export async function deleteChildAction(childId: string) {
   try {
     // Get current user session
     const session = await auth.api.getSession({
-      headers: await headers()
+      headers: await headers(),
     });
 
     if (!session?.user?.id) {
@@ -150,12 +183,28 @@ export async function deleteChildAction(childId: string) {
   }
 }
 
-export async function updateChildLevelAction(childId: string, level: number) {
+export async function updateChildLevelAction(prevState: any, formData: FormData) {
+  console.log('updateChildLevelAction called');
+
+  const childId = formData.get('childId') as string;
+  const level = parseInt(formData.get('level') as string);
+
+  console.log('Form data:', { childId, level });
+
+  if (!childId || isNaN(level)) {
+    console.log('Invalid form data');
+    return {
+      error: 'Invalid child ID or level',
+    };
+  }
   try {
+    console.log('Getting session...');
     // Get current user session
     const session = await auth.api.getSession({
-      headers: await headers()
+      headers: await headers(),
     });
+
+    console.log('Session:', session?.user?.id ? `Found: ${session.user.id}` : 'Not found');
 
     if (!session?.user?.id) {
       return {

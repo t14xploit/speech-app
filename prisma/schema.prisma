@@ -18,16 +18,20 @@ datasource db {
 
 model User {
   id            String    @id @default(cuid())
+  name          String
   email         String    @unique
   emailVerified Boolean   @default(false)
-  name          String
   image         String?
-  password      String?   // Required for Better-Auth email/password
   createdAt     DateTime  @default(now())
   updatedAt     DateTime  @updatedAt
-  children      Child[]
   sessions      Session[]
   accounts      Account[]
+  children      Child[]
+
+  role       String? @default("user")
+  banned     Boolean?
+  banReason  String?
+  banExpires DateTime?
 
   @@map("user")
 }
@@ -42,6 +46,8 @@ model Session {
   ipAddress String?
   userAgent String?
   user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  impersonatedBy String?
 
   @@map("session")
 }

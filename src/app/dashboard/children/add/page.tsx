@@ -6,11 +6,10 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Alert, AlertDescription } from "@/components/ui/alert";
 import Link from "next/link";
-import { useActionState, useEffect } from "react";
-import { useRouter } from "next/navigation";
-import { useFormStatus } from "react-dom";
-import { Loader2 } from "lucide-react";
-import { addChildAction } from "@/lib/actions/children";
+import { auth } from "@/lib/auth";
+import { headers } from "next/headers";
+import { redirect } from "next/navigation";
+import AddChildForm from "@/components/children/AddChildForm";
 
 function SubmitButton() {
   const { pending } = useFormStatus();
@@ -33,16 +32,15 @@ function SubmitButton() {
   );
 }
 
-export default function AddChildPage() {
-  const [state, formAction] = useActionState(addChildAction, { error: "" });
-  const router = useRouter();
+export default async function AddChildPage() {
+  // Check if user is signed in on server side
+  const session = await auth.api.getSession({
+    headers: await headers(),
+  });
 
-  // Handle successful child addition
-  useEffect(() => {
-    if (state?.success) {
-      router.push('/dashboard/children');
-    }
-  }, [state?.success, router]);
+  if (!session?.user) {
+    redirect('/signin');
+  }
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-blue-50 via-purple-50 to-pink-50 p-4">
@@ -79,6 +77,8 @@ export default function AddChildPage() {
             )}
 
             <form action={formAction} className="space-y-6">
+              <input type="hidden" name="userId" value={session.user.id} />
+
               <div className="space-y-2">
                 <Label htmlFor="name">Child&apos;s Name *</Label>
                 <Input

@@ -32,12 +32,14 @@ export async function signInAction(prevState: any, formData: FormData) {
 
   try {
     console.log('Attempting sign in for:', validatedData.data.email);
+    console.log('Password provided:', validatedData.data.password ? 'Yes' : 'No');
+
     const result = await signIn.email({
       email: validatedData.data.email,
       password: validatedData.data.password,
     });
 
-    console.log('Sign in result:', result);
+    console.log('Sign in result:', JSON.stringify(result, null, 2));
 
     if (result.error) {
       console.log('Sign in failed:', result.error);
@@ -46,13 +48,17 @@ export async function signInAction(prevState: any, formData: FormData) {
       };
     }
 
-    // Successful sign in - redirect will be handled by the client
-    console.log('Sign in successful, returning success state');
-    return { success: true };
+    // Successful sign in - redirect to dashboard
+    console.log('Sign in successful, redirecting to dashboard');
+    redirect('/dashboard');
   } catch (error) {
-    console.error('Sign in error:', error);
+    console.error('Sign in error details:', error);
+    console.error('Error type:', typeof error);
+    console.error('Error message:', error instanceof Error ? error.message : 'Unknown error');
+    console.error('Error stack:', error instanceof Error ? error.stack : 'No stack trace');
+
     return {
-      error: 'An error occurred during sign in',
+      error: `Sign in failed: ${error instanceof Error ? error.message : 'Unknown error'}`,
     };
   }
 }
@@ -91,9 +97,9 @@ export async function signUpAction(prevState: any, formData: FormData) {
       };
     }
 
-    // Successful sign up - redirect will be handled by the client
-    console.log('Sign up successful, returning success state');
-    return { success: true };
+    // Successful sign up - redirect to dashboard
+    console.log('Sign up successful, redirecting to dashboard');
+    redirect('/dashboard');
   } catch (error) {
     console.error('Sign up error:', error);
     return {

@@ -2,9 +2,24 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
 import { getChildrenAction } from "@/lib/actions/children";
+import { auth } from "@/lib/auth";
+import { headers } from "next/headers";
+import { redirect } from "next/navigation";
 import ChildrenList from "@/components/children/ChildrenList";
 
 export default async function ChildrenPage() {
+  // Check if user is signed in on server side
+  const session = await auth.api.getSession({
+    headers: await headers(),
+  });
+
+  console.log('Server session in children page:', session?.user?.id ? `Found: ${session.user.id}` : 'Not found');
+
+  if (!session?.user) {
+    redirect('/signin');
+  }
+
+  // Get children for the current user
   const { children } = await getChildrenAction();
   return (
     <div className="min-h-screen bg-gradient-to-br from-blue-50 via-purple-50 to-pink-50 p-4">
