@@ -301,8 +301,12 @@ export default function AssessLevelPage({ params }: { params: { id: string } }) 
                     You&apos;ve chosen {levelData[selectedLevel].name} - {levelData[selectedLevel].description}
                   </p>
                 </div>
-                <Button className="bg-green-600 hover:bg-green-700">
-                  Confirm & Save Level
+                <Button
+                  onClick={handleConfirmLevel}
+                  disabled={isUpdating}
+                  className="bg-green-600 hover:bg-green-700"
+                >
+                  {isUpdating ? 'Saving...' : 'Confirm & Save Level'}
                 </Button>
               </div>
             </CardContent>
