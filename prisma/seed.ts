@@ -47,8 +47,15 @@ async function main() {
       continue;
     }
 
-    const createdWord = await prisma.word.create({
-      data: {
+    const createdWord = await prisma.word.upsert({
+      where: {
+        text_level: {
+          text: word.text,
+          level: word.level,
+        },
+      },
+      update: {},
+      create: {
         text: word.text,
         level: word.level,
         categoryId: categoryId,

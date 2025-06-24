@@ -4,7 +4,7 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { AlertDialog, AlertDialogAction, AlertDialogCancel, AlertDialogContent, AlertDialogDescription, AlertDialogFooter, AlertDialogHeader, AlertDialogTitle, AlertDialogTrigger } from "@/components/ui/alert-dialog";
-import { Trash2, Calendar, TrendingUp, Target } from "lucide-react";
+import { Trash2, Calendar, TrendingUp, Target, BookOpen } from "lucide-react";
 import Link from "next/link";
 import { deleteChildAction } from "@/lib/actions/children";
 import { useRouter } from "next/navigation";
@@ -159,6 +159,13 @@ export default function ChildrenList({ children }: ChildrenListProps) {
                     <Button className="w-full bg-amber-600 hover:bg-amber-700" size="sm">
                       <Target className="w-4 h-4 mr-2" />
                       Assess Level
+                    </Button>
+                  </Link>
+
+                  <Link href={`/dashboard/children/${child.id}/vocabulary`}>
+                    <Button className="w-full bg-blue-600 hover:bg-blue-700" size="sm">
+                      <BookOpen className="w-4 h-4 mr-2" />
+                      Vocabulary Builder
                     </Button>
                   </Link>
 

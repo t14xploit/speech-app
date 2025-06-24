@@ -97,17 +97,48 @@ export async function getChildrenAction() {
       return { children: [] };
     }
 
-    // Get children for current user
+    // Get children for current user with statistics
     const children = await prisma.child.findMany({
       where: {
         userId: session.user.id,
+      },
+      include: {
+        words: true, // Include known words
+        exerciseResults: true, // Include exercise results
       },
       orderBy: {
         createdAt: 'desc',
       },
     });
 
-    return { children };
+    // Transform children data to include statistics
+    const childrenWithStats = children.map(child => {
+      const knownWordsCount = child.words.length;
+      const exercisesCount = child.exerciseResults.length;
+
+      // Calculate days since creation
+      const daysSinceCreation = Math.floor(
+        (new Date().getTime() - child.createdAt.getTime()) / (1000 * 60 * 60 * 24)
+      );
+
+      return {
+        id: child.id,
+        name: child.name,
+        birthDate: child.birthDate,
+        level: child.level,
+        createdAt: child.createdAt,
+        updatedAt: child.updatedAt,
+        stats: {
+          knownWords: knownWordsCount,
+          exercises: exercisesCount,
+          days: daysSinceCreation
+        }
+      };
+    });
+
+    console.log(`Found ${children.length} children for user ${session.user.id}`);
+
+    return { children: childrenWithStats };
   } catch (error) {
     console.error('Get children error:', error);
     return { children: [] };
