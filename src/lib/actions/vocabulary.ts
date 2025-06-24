@@ -93,6 +93,38 @@ export async function getChildVocabulary(childId: string) {
   }
 }
 
+// Function to calculate appropriate level based on known words
+async function calculateChildLevel(childId: string): Promise<number> {
+  // Get all known words for the child with their levels
+  const knownWords = await prisma.childWord.findMany({
+    where: { childId },
+    include: {
+      word: true
+    }
+  });
+
+  // Count words by level
+  const wordsByLevel = {
+    0: knownWords.filter(cw => cw.word.level === 0).length,
+    1: knownWords.filter(cw => cw.word.level === 1).length,
+    2: knownWords.filter(cw => cw.word.level === 2).length,
+    3: knownWords.filter(cw => cw.word.level === 3).length,
+  };
+
+  // Level progression thresholds based on speech development milestones
+  // Level 0: 0-10 words (early sounds)
+  // Level 1: 10-50 words (single words)
+  // Level 2: 50-200 words (word combinations)
+  // Level 3: 200+ words (complex speech)
+
+  const totalWords = knownWords.length;
+
+  if (totalWords >= 200) return 3;
+  if (totalWords >= 50) return 2;
+  if (totalWords >= 10) return 1;
+  return 0;
+}
+
 export async function updateWordStatus(childId: string, wordId: string, status: 'known' | 'learning' | 'remove') {
   try {
     // Get current user session
@@ -146,6 +178,19 @@ export async function updateWordStatus(childId: string, wordId: string, status: 
       });
     }
     // For 'learning' status, we could add a separate field or use notes
+
+    // Automatically assess and update child's level based on vocabulary progress
+    const newLevel = await calculateChildLevel(childId);
+
+    // Update child's level if it has changed
+    if (newLevel !== child.level) {
+      await prisma.child.update({
+        where: { id: childId },
+        data: { level: newLevel }
+      });
+
+      console.log(`Child ${childId} level automatically updated from ${child.level} to ${newLevel}`);
+    }
 
     return { success: true };
   } catch (error) {

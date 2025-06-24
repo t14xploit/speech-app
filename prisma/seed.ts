@@ -89,6 +89,7 @@ async function main() {
       data: {
         title: exercise.title,
         description: exercise.description,
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
         type: exercise.type as any, // Cast to enum
         level: exercise.level,
         categoryId: categoryId,

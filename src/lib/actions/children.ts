@@ -103,7 +103,7 @@ export async function getChildrenAction() {
         userId: session.user.id,
       },
       include: {
-        words: true, // Include known words
+        knownWords: true, // Include known words (ChildWord relation)
         exerciseResults: true, // Include exercise results
       },
       orderBy: {
@@ -113,7 +113,7 @@ export async function getChildrenAction() {
 
     // Transform children data to include statistics
     const childrenWithStats = children.map(child => {
-      const knownWordsCount = child.words.length;
+      const knownWordsCount = child.knownWords.length;
       const exercisesCount = child.exerciseResults.length;
 
       // Calculate days since creation
@@ -144,6 +144,8 @@ export async function getChildrenAction() {
     return { children: [] };
   }
 }
+
+
 
 // New action that accepts userId directly from client
 export async function getChildrenByUserIdAction(userId: string) {
@@ -269,12 +271,13 @@ export async function updateChildLevelAction(prevState: any, formData: FormData)
     });
 
     console.log(`Updated child ${childId} to level ${level}`);
-
-    return { success: true };
   } catch (error) {
     console.error('Update child level error:', error);
     return {
       error: 'An error occurred while updating the child level',
     };
   }
+
+  // Redirect to children page on success (outside try-catch to avoid catching NEXT_REDIRECT)
+  redirect('/dashboard/children');
 }

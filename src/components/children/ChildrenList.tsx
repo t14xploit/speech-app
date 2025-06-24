@@ -4,7 +4,7 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { AlertDialog, AlertDialogAction, AlertDialogCancel, AlertDialogContent, AlertDialogDescription, AlertDialogFooter, AlertDialogHeader, AlertDialogTitle, AlertDialogTrigger } from "@/components/ui/alert-dialog";
-import { Trash2, Calendar, TrendingUp, Target, BookOpen } from "lucide-react";
+import { Trash2, Calendar, TrendingUp, BookOpen } from "lucide-react";
 import Link from "next/link";
 import { deleteChildAction } from "@/lib/actions/children";
 import { useRouter } from "next/navigation";
@@ -17,6 +17,11 @@ interface Child {
   level: number;
   createdAt: Date;
   updatedAt: Date;
+  stats?: {
+    knownWords: number;
+    exercises: number;
+    days: number;
+  };
 }
 
 interface ChildrenListProps {
@@ -155,13 +160,6 @@ export default function ChildrenList({ children }: ChildrenListProps) {
                 </p>
                 
                 <div className="space-y-3">
-                  <Link href={`/dashboard/children/${child.id}/assess-level`}>
-                    <Button className="w-full bg-amber-600 hover:bg-amber-700" size="sm">
-                      <Target className="w-4 h-4 mr-2" />
-                      Assess Level
-                    </Button>
-                  </Link>
-
                   <Link href={`/dashboard/children/${child.id}/vocabulary`}>
                     <Button className="w-full bg-blue-600 hover:bg-blue-700" size="sm">
                       <BookOpen className="w-4 h-4 mr-2" />
@@ -187,15 +185,21 @@ export default function ChildrenList({ children }: ChildrenListProps) {
                 <div className="mt-4 pt-3 border-t border-gray-100">
                   <div className="grid grid-cols-3 gap-2 text-center">
                     <div>
-                      <div className="text-lg font-semibold text-blue-600">0</div>
+                      <div className="text-lg font-semibold text-blue-600">
+                        {child.stats?.knownWords || 0}
+                      </div>
                       <div className="text-xs text-gray-500">Words</div>
                     </div>
                     <div>
-                      <div className="text-lg font-semibold text-green-600">0</div>
+                      <div className="text-lg font-semibold text-green-600">
+                        {child.stats?.exercises || 0}
+                      </div>
                       <div className="text-xs text-gray-500">Exercises</div>
                     </div>
                     <div>
-                      <div className="text-lg font-semibold text-purple-600">0</div>
+                      <div className="text-lg font-semibold text-purple-600">
+                        {child.stats?.days || 0}
+                      </div>
                       <div className="text-xs text-gray-500">Days</div>
                     </div>
                   </div>
