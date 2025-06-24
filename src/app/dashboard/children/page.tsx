@@ -61,7 +61,7 @@ export default async function ChildrenPage() {
               </p>
               <Link href="/dashboard/children/add">
                 <Button className="bg-blue-600 hover:bg-blue-700">
-                  Add Your First Child
+                  + Add Your First Child
                 </Button>
               </Link>
             </CardContent>

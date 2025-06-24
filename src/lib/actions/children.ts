@@ -3,7 +3,8 @@
 import { z } from 'zod';
 import { prisma } from '@/lib/prisma';
 import { auth } from '@/lib/auth';
-import { headers, cookies } from 'next/headers';
+import { headers } from 'next/headers';
+import { redirect } from 'next/navigation';
 
 const addChildSchema = z.object({
   name: z.string().min(1, 'Name is required').max(50, 'Name must be less than 50 characters'),
@@ -25,28 +26,27 @@ export async function addChildAction(prevState: any, formData: FormData) {
   const rawData = {
     name: formData.get('name') as string,
     birthDate: formData.get('birthDate') as string,
-    userId: formData.get('userId') as string,
   };
 
   // Validate input
-  const validatedData = addChildSchema.safeParse({
-    name: rawData.name,
-    birthDate: rawData.birthDate,
-  });
-
+  const validatedData = addChildSchema.safeParse(rawData);
   if (!validatedData.success) {
     return {
       error: validatedData.error.errors[0].message,
     };
   }
 
-  if (!rawData.userId) {
-    return {
-      error: 'User ID is required',
-    };
-  }
-
   try {
+    // Get current user session
+    const session = await auth.api.getSession({
+      headers: await headers(),
+    });
+
+    if (!session?.user?.id) {
+      return {
+        error: 'You must be signed in to add a child',
+      };
+    }
 
     // Parse birth date and calculate suggested level
     const birthDate = new Date(validatedData.data.birthDate);
@@ -56,7 +56,7 @@ export async function addChildAction(prevState: any, formData: FormData) {
       name: validatedData.data.name,
       birthDate: birthDate.toISOString(),
       suggestedLevel,
-      userId: rawData.userId
+      userId: session.user.id
     });
 
     // Create child in database with suggested level (parent will assess actual level)
@@ -65,19 +65,20 @@ export async function addChildAction(prevState: any, formData: FormData) {
         name: validatedData.data.name,
         birthDate: birthDate,
         level: suggestedLevel, // This will be updated after assessment
-        userId: rawData.userId,
+        userId: session.user.id,
       },
     });
 
     console.log('Child created successfully:', child);
-
-    return { success: true };
   } catch (error) {
     console.error('Add child error:', error);
     return {
       error: 'An error occurred while adding the child',
     };
   }
+
+  // Redirect to children page on success (outside try-catch to avoid catching NEXT_REDIRECT)
+  redirect('/dashboard/children');
 }
 
 export async function getChildrenAction() {
