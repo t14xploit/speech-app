@@ -1,10 +1,48 @@
 import Link from "next/link";
+import { Button } from "@/components/ui/button";
+import { LogIn, UserPlus } from "lucide-react";
 
 export default function Home() {
   return (
     <div className="min-h-screen bg-gradient-to-br from-blue-50 via-purple-50 to-pink-50">
+      {/* Header with Login */}
+      <header className="bg-white/80 backdrop-blur-sm border-b border-gray-200 sticky top-0 z-50">
+        <div className="container mx-auto px-4 py-4">
+          <div className="flex justify-between items-center">
+            <div className="flex items-center space-x-3">
+              <div className="w-10 h-10 bg-gradient-to-r from-blue-600 to-purple-600 rounded-lg flex items-center justify-center">
+                <span className="text-white text-xl">🗣️</span>
+              </div>
+              <div>
+                <h1 className="text-xl font-bold bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent">
+                  TinyTalker
+                </h1>
+              </div>
+            </div>
+            <div className="flex items-center space-x-3">
+              <Link href="/signin">
+                <Button variant="outline" size="sm" className="hidden sm:flex">
+                  <LogIn className="w-4 h-4 mr-2" />
+                  Sign In
+                </Button>
+                <Button variant="outline" size="sm" className="sm:hidden">
+                  <LogIn className="w-4 h-4" />
+                </Button>
+              </Link>
+              <Link href="/signup">
+                <Button className="bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700" size="sm">
+                  <UserPlus className="w-4 h-4 mr-2 hidden sm:block" />
+                  <span className="hidden sm:block">Sign Up</span>
+                  <UserPlus className="w-4 h-4 sm:hidden" />
+                </Button>
+              </Link>
+            </div>
+          </div>
+        </div>
+      </header>
+
       {/* Hero Section */}
-      <div className="container mx-auto px-4 py-16">
+      <div className="container mx-auto px-4 py-8 sm:py-16">
         <div className="text-center mb-16">
           <h1 className="text-5xl md:text-6xl font-bold text-gray-800 mb-6">
             🗣️ TinyTalker
