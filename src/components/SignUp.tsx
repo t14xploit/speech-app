@@ -80,45 +80,48 @@ export function SignUp() {
 						</div>
 					</div>
 					<div className="grid gap-2">
-						<Label htmlFor="email">Email</Label>
+						<Label htmlFor="email" className="text-sm font-medium text-gray-700">Email</Label>
 						<Input
 							id="email"
 							type="email"
-							placeholder="m@example.com"
+							placeholder="email@example.com"
 							required
 							onChange={(e) => {
 								setEmail(e.target.value);
 							}}
 							value={email}
+							className="h-10 sm:h-11 text-sm sm:text-base"
 						/>
 					</div>
 					<div className="grid gap-2">
-						<Label htmlFor="password">Password</Label>
+						<Label htmlFor="password" className="text-sm font-medium text-gray-700">Password</Label>
 						<Input
 							id="password"
 							type="password"
 							value={password}
 							onChange={(e) => setPassword(e.target.value)}
 							autoComplete="new-password"
-							placeholder="Password"
+							placeholder="Create a password"
+							className="h-10 sm:h-11 text-sm sm:text-base"
 						/>
 					</div>
 					<div className="grid gap-2">
-						<Label htmlFor="password">Confirm Password</Label>
+						<Label htmlFor="password_confirmation" className="text-sm font-medium text-gray-700">Confirm Password</Label>
 						<Input
 							id="password_confirmation"
 							type="password"
 							value={passwordConfirmation}
 							onChange={(e) => setPasswordConfirmation(e.target.value)}
 							autoComplete="new-password"
-							placeholder="Confirm Password"
+							placeholder="Confirm your password"
+							className="h-10 sm:h-11 text-sm sm:text-base"
 						/>
 					</div>
 					<div className="grid gap-2">
-						<Label htmlFor="image">Profile Image (optional)</Label>
-						<div className="flex items-end gap-4">
+						<Label htmlFor="image" className="text-sm font-medium text-gray-700">Profile Image (optional)</Label>
+						<div className="flex items-end gap-3 sm:gap-4">
 							{imagePreview && (
-								<div className="relative w-16 h-16 rounded-sm overflow-hidden">
+								<div className="relative w-12 h-12 sm:w-16 sm:h-16 rounded-lg overflow-hidden flex-shrink-0">
 									<Image
 										src={imagePreview}
 										alt="Profile preview"
@@ -133,23 +136,28 @@ export function SignUp() {
 									type="file"
 									accept="image/*"
 									onChange={handleImageChange}
-									className="w-full"
+									className="w-full h-10 sm:h-11 text-sm sm:text-base"
 								/>
 								{imagePreview && (
-									<X
-										className="cursor-pointer"
+									<Button
+										type="button"
+										variant="outline"
+										size="sm"
+										className="flex-shrink-0 h-10 sm:h-11 px-2 sm:px-3"
 										onClick={() => {
 											setImage(null);
 											setImagePreview(null);
 										}}
-									/>
+									>
+										<X className="h-3 w-3 sm:h-4 sm:w-4" />
+									</Button>
 								)}
 							</div>
 						</div>
 					</div>
 					<Button
 						type="submit"
-						className="w-full"
+						className="w-full h-10 sm:h-11 bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 text-white font-semibold text-sm sm:text-base mt-2"
 						disabled={loading}
 						onClick={async () => {
 							await authClient.signUp.email({
@@ -177,17 +185,20 @@ export function SignUp() {
 						}}
 					>
 						{loading ? (
-							<Loader2 size={16} className="animate-spin" />
+							<>
+								<Loader2 className="animate-spin mr-2 h-3 w-3 sm:h-4 sm:w-4" />
+								<span className="text-sm sm:text-base">Creating account...</span>
+							</>
 						) : (
-							"Create an account"
+							<span className="text-sm sm:text-base">Create Account</span>
 						)}
 					</Button>
 				</div>
 			</CardContent>
-			<CardFooter>
-				<div className="flex justify-center w-full border-t py-4">
-					<p className="text-center text-xs text-neutral-500">
-						Secured by <span className="text-orange-400">better-auth.</span>
+			<CardFooter className="px-4 sm:px-6">
+				<div className="flex justify-center w-full border-t py-3 sm:py-4">
+					<p className="text-center text-xs sm:text-sm text-neutral-500">
+						Secured by <span className="text-orange-400 font-medium">better-auth</span>
 					</p>
 				</div>
 			</CardFooter>
