@@ -61,17 +61,17 @@ export default async function ChildrenPage() {
 
         {/* Children List or Empty State */}
         {children.length === 0 ? (
-          <Card className="shadow-lg border-0 text-center py-12">
-            <CardContent>
-              <div className="text-6xl mb-4">👶</div>
-              <h3 className="text-2xl font-semibold text-gray-800 mb-2">
+          <Card className="shadow-lg border-0 text-center py-8 sm:py-12">
+            <CardContent className="px-4 sm:px-6">
+              <div className="text-4xl sm:text-6xl mb-4">👶</div>
+              <h3 className="text-xl sm:text-2xl font-semibold text-gray-800 mb-2">
                 No children added yet
               </h3>
-              <p className="text-gray-600 mb-6 max-w-md mx-auto">
+              <p className="text-sm sm:text-base text-gray-600 mb-6 max-w-md mx-auto">
                 Start by adding your child&apos;s profile to begin tracking their speech development journey.
               </p>
               <Link href="/dashboard/children/add">
-                <Button className="bg-blue-600 hover:bg-blue-700">
+                <Button className="bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 text-sm sm:text-base">
                   + Add Your First Child
                 </Button>
               </Link>

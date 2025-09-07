@@ -39,41 +39,39 @@ export default async function ExercisesPage() {
       {/* Header */}
       <div className="bg-white/80 backdrop-blur-sm border-b border-gray-200 sticky top-0 z-10">
         <div className="max-w-7xl mx-auto px-4 py-4">
-          <div className="flex items-center justify-between">
-            <div className="flex items-center space-x-4">
-              <Link href="/dashboard">
-                <Button variant="outline" size="sm">
-                  <ArrowLeft className="w-4 h-4 mr-2" />
-                  Back to Dashboard
-                </Button>
-              </Link>
-              <div>
-                <h1 className="text-2xl font-bold text-gray-800">Speech Exercises</h1>
-                <p className="text-sm text-gray-600">Interactive exercises to improve speech development</p>
-              </div>
+          <div className="flex flex-col sm:flex-row sm:items-center gap-3 sm:gap-4">
+            <Link href="/dashboard">
+              <Button variant="outline" size="sm" className="w-full sm:w-auto">
+                <ArrowLeft className="w-4 h-4 mr-2" />
+                Back to Dashboard
+              </Button>
+            </Link>
+            <div className="flex-1">
+              <h1 className="text-xl sm:text-2xl font-bold text-gray-800">Speech Exercises</h1>
+              <p className="text-xs sm:text-sm text-gray-600">Interactive exercises to improve speech development</p>
             </div>
           </div>
         </div>
       </div>
 
-      <div className="max-w-7xl mx-auto px-4 py-8">
+      <div className="max-w-7xl mx-auto px-4 py-4 sm:py-8">
         {/* Children Selection */}
-        <div className="mb-8">
-          <h2 className="text-xl font-semibold text-gray-800 mb-4 flex items-center">
-            <Users className="w-5 h-5 mr-2" />
+        <div className="mb-6 sm:mb-8">
+          <h2 className="text-lg sm:text-xl font-semibold text-gray-800 mb-4 flex items-center">
+            <Users className="w-4 h-4 sm:w-5 sm:h-5 mr-2" />
             Select a Child for Exercises
           </h2>
 
           {children.length === 0 ? (
             <Card className="shadow-lg border-0">
-              <CardContent className="text-center py-12">
-                <div className="w-16 h-16 bg-gray-100 rounded-full flex items-center justify-center mx-auto mb-4">
-                  <Target className="w-8 h-8 text-gray-400" />
+              <CardContent className="text-center py-8 sm:py-12 px-4 sm:px-6">
+                <div className="w-12 h-12 sm:w-16 sm:h-16 bg-gray-100 rounded-full flex items-center justify-center mx-auto mb-4">
+                  <Target className="w-6 h-6 sm:w-8 sm:h-8 text-gray-400" />
                 </div>
-                <h3 className="text-lg font-semibold text-gray-800 mb-2">No children added yet</h3>
-                <p className="text-gray-600 mb-4">Add a child profile to start speech exercises.</p>
+                <h3 className="text-base sm:text-lg font-semibold text-gray-800 mb-2">No children added yet</h3>
+                <p className="text-sm sm:text-base text-gray-600 mb-4">Add a child profile to start speech exercises.</p>
                 <Link href="/dashboard/children/add">
-                  <Button className="bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700">
+                  <Button className="bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 text-sm sm:text-base">
                     <Plus className="w-4 h-4 mr-2" />
                     Add Your First Child
                   </Button>

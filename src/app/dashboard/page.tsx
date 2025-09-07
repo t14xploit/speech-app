@@ -61,27 +61,29 @@ export default async function DashboardPage() {
       <div className="bg-white/80 backdrop-blur-sm border-b border-gray-200 sticky top-0 z-10">
         <div className="max-w-7xl mx-auto px-4 py-4">
           <div className="flex justify-between items-center">
-            <div className="flex items-center space-x-4">
-              <div className="w-10 h-10 bg-gradient-to-r from-blue-600 to-purple-600 rounded-lg flex items-center justify-center">
-                <span className="text-white text-xl">🗣️</span>
+            <div className="flex items-center space-x-3 sm:space-x-4">
+              <div className="w-8 h-8 sm:w-10 sm:h-10 bg-gradient-to-r from-blue-600 to-purple-600 rounded-lg flex items-center justify-center">
+                <span className="text-white text-lg sm:text-xl">🗣️</span>
               </div>
               <div>
-                <h1 className="text-2xl font-bold bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent">
+                <h1 className="text-lg sm:text-2xl font-bold bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent">
                   TinyTalker
                 </h1>
-                <p className="text-sm text-gray-600">Welcome back, {session.user.name || 'Parent'}!</p>
+                <p className="text-xs sm:text-sm text-gray-600 hidden sm:block">Welcome back, {session.user.name || 'Parent'}!</p>
               </div>
             </div>
-            <div className="flex items-center space-x-3">
+            <div className="flex items-center space-x-2 sm:space-x-3">
               <Link href="/dashboard/children/add">
-                <Button className="bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700">
-                  <Plus className="w-4 h-4 mr-2" />
-                  Add Child
+                <Button className="bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700" size="sm">
+                  <Plus className="w-4 h-4 mr-1 sm:mr-2" />
+                  <span className="hidden sm:inline">Add Child</span>
+                  <span className="sm:hidden">Add</span>
                 </Button>
               </Link>
               <form action={signOutAction}>
-                <Button variant="outline" type="submit">
-                  Sign Out
+                <Button variant="outline" type="submit" size="sm">
+                  <span className="hidden sm:inline">Sign Out</span>
+                  <span className="sm:hidden">Out</span>
                 </Button>
               </form>
             </div>

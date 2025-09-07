@@ -42,18 +42,18 @@ export default function AddChildPage() {
     <div className="min-h-screen bg-gradient-to-br from-blue-50 via-purple-50 to-pink-50 p-4">
       <div className="max-w-2xl mx-auto">
         {/* Header */}
-        <div className="flex items-center gap-4 mb-8">
+        <div className="flex flex-col sm:flex-row sm:items-center gap-3 sm:gap-4 mb-6 sm:mb-8">
           <Link href="/dashboard/children">
-            <Button variant="outline" size="sm" className="bg-white">
+            <Button variant="outline" size="sm" className="bg-white w-full sm:w-auto">
               <ArrowLeft className="h-4 w-4 mr-2" />
               Back
             </Button>
           </Link>
-          <div>
-            <h1 className="text-3xl font-bold text-gray-800">
+          <div className="flex-1">
+            <h1 className="text-2xl sm:text-3xl font-bold text-gray-800">
               Add Child Profile
             </h1>
-            <p className="text-gray-600">
+            <p className="text-sm sm:text-base text-gray-600">
               Create a profile to track your child&apos;s speech development
             </p>
           </div>
