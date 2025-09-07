@@ -23,17 +23,17 @@ export default function SignIn() {
   const router = useRouter();
 
   return (
-    <Card className="shadow-2xl border-0 bg-white/80 backdrop-blur-sm">
-      <CardHeader className="text-center pb-6">
-        <CardTitle className="text-2xl font-bold text-gray-800">Sign In</CardTitle>
-        <CardDescription className="text-gray-600">
+    <Card className="shadow-2xl border-0 bg-white/90 backdrop-blur-sm w-full">
+      <CardHeader className="text-center pb-4 sm:pb-6 px-4 sm:px-6">
+        <CardTitle className="text-xl sm:text-2xl font-bold text-gray-800">Sign In</CardTitle>
+        <CardDescription className="text-sm sm:text-base text-gray-600">
           Enter your credentials to access your dashboard
         </CardDescription>
       </CardHeader>
-      <CardContent>
+      <CardContent className="px-4 sm:px-6">
         <div className="grid gap-4">
           <div className="grid gap-2">
-            <Label htmlFor="email">Email</Label>
+            <Label htmlFor="email" className="text-sm font-medium text-gray-700">Email</Label>
             <Input
               id="email"
               type="email"
@@ -42,26 +42,28 @@ export default function SignIn() {
               onChange={(ev) => setEmail(ev.target.value)}
               required
               autoComplete="email"
+              className="h-10 sm:h-11 text-sm sm:text-base"
             />
           </div>
 
           <div className="grid gap-2">
-            <Label htmlFor="password">Password</Label>
+            <Label htmlFor="password" className="text-sm font-medium text-gray-700">Password</Label>
             <Input
               id="password"
               type="password"
-              placeholder="password"
+              placeholder="Enter your password"
               value={password}
               onChange={(ev) => setPassword(ev.target.value)}
               required
               autoComplete="current-password"
+              className="h-10 sm:h-11 text-sm sm:text-base"
             />
           </div>
 
           <Button
             type="submit"
             disabled={loading}
-            className="w-full h-11 bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 text-white font-semibold"
+            className="w-full h-10 sm:h-11 bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 text-white font-semibold text-sm sm:text-base mt-2"
             onClick={async () => {
               setLoading(true);
               try {
@@ -84,11 +86,11 @@ export default function SignIn() {
           >
             {loading ? (
               <>
-                <Loader2 className="animate-spin mr-2 h-4 w-4" />
-                Signing in...
+                <Loader2 className="animate-spin mr-2 h-3 w-3 sm:h-4 sm:w-4" />
+                <span className="text-sm sm:text-base">Signing in...</span>
               </>
             ) : (
-              "Sign In"
+              <span className="text-sm sm:text-base">Sign In</span>
             )}
           </Button>
         </div>

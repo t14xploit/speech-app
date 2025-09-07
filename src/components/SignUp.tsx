@@ -42,18 +42,18 @@ export function SignUp() {
 	};
 
 	return (
-		<Card className="z-50 rounded-md rounded-t-none max-w-md">
-			<CardHeader>
-				<CardTitle className="text-lg md:text-xl">Sign Up</CardTitle>
-				<CardDescription className="text-xs md:text-sm">
+		<Card className="shadow-2xl border-0 bg-white/90 backdrop-blur-sm w-full">
+			<CardHeader className="text-center pb-4 sm:pb-6 px-4 sm:px-6">
+				<CardTitle className="text-xl sm:text-2xl font-bold text-gray-800">Sign Up</CardTitle>
+				<CardDescription className="text-sm sm:text-base text-gray-600">
 					Enter your information to create an account
 				</CardDescription>
 			</CardHeader>
-			<CardContent>
+			<CardContent className="px-4 sm:px-6">
 				<div className="grid gap-4">
-					<div className="grid grid-cols-2 gap-4">
+					<div className="grid grid-cols-1 sm:grid-cols-2 gap-3 sm:gap-4">
 						<div className="grid gap-2">
-							<Label htmlFor="first-name">First name</Label>
+							<Label htmlFor="first-name" className="text-sm font-medium text-gray-700">First name</Label>
 							<Input
 								id="first-name"
 								placeholder="Max"
@@ -62,10 +62,11 @@ export function SignUp() {
 									setFirstName(e.target.value);
 								}}
 								value={firstName}
+								className="h-10 sm:h-11 text-sm sm:text-base"
 							/>
 						</div>
 						<div className="grid gap-2">
-							<Label htmlFor="last-name">Last name</Label>
+							<Label htmlFor="last-name" className="text-sm font-medium text-gray-700">Last name</Label>
 							<Input
 								id="last-name"
 								placeholder="Robinson"
@@ -74,6 +75,7 @@ export function SignUp() {
 									setLastName(e.target.value);
 								}}
 								value={lastName}
+								className="h-10 sm:h-11 text-sm sm:text-base"
 							/>
 						</div>
 					</div>
