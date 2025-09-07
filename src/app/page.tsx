@@ -43,23 +43,23 @@ export default function Home() {
 
       {/* Hero Section */}
       <div className="container mx-auto px-4 py-8 sm:py-16">
-        <div className="text-center mb-16">
-          <h1 className="text-5xl md:text-6xl font-bold text-gray-800 mb-6">
+        <div className="text-center mb-8 sm:mb-16">
+          <h1 className="text-4xl sm:text-5xl md:text-6xl font-bold text-gray-800 mb-4 sm:mb-6">
             🗣️ TinyTalker
           </h1>
-          <p className="text-xl md:text-2xl text-gray-600 mb-8 max-w-3xl mx-auto">
+          <p className="text-lg sm:text-xl md:text-2xl text-gray-600 mb-6 sm:mb-8 max-w-3xl mx-auto px-4">
             A comprehensive speech therapy app for busy parents helping children with speech delays
           </p>
-          <div className="flex flex-col sm:flex-row gap-4 justify-center">
+          <div className="flex flex-col sm:flex-row gap-3 sm:gap-4 justify-center px-4">
             <Link
               href="/demo"
-              className="bg-blue-600 hover:bg-blue-700 text-white px-8 py-4 rounded-2xl font-semibold text-lg transition-colors shadow-lg"
+              className="bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 text-white px-6 sm:px-8 py-3 sm:py-4 rounded-2xl font-semibold text-base sm:text-lg transition-all duration-300 shadow-lg hover:shadow-xl transform hover:scale-105"
             >
               Try Demo
             </Link>
             <Link
               href="/about"
-              className="bg-white hover:bg-gray-50 text-gray-800 px-8 py-4 rounded-2xl font-semibold text-lg transition-colors shadow-lg border border-gray-200"
+              className="bg-white hover:bg-gray-50 text-gray-800 px-6 sm:px-8 py-3 sm:py-4 rounded-2xl font-semibold text-base sm:text-lg transition-all duration-300 shadow-lg hover:shadow-xl border border-gray-200 transform hover:scale-105"
             >
               Learn More
             </Link>
@@ -67,89 +67,89 @@ export default function Home() {
         </div>
 
         {/* Features Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 mb-16">
-          <div className="bg-white rounded-2xl p-6 shadow-lg hover:shadow-xl transition-shadow">
-            <div className="text-4xl mb-4">📊</div>
-            <h3 className="text-xl font-semibold text-gray-800 mb-2">Statistics</h3>
-            <p className="text-gray-600">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6 lg:gap-8 mb-8 sm:mb-16 px-4">
+          <div className="bg-white rounded-2xl p-4 sm:p-6 shadow-lg hover:shadow-xl transition-all duration-300 transform hover:scale-105">
+            <div className="text-3xl sm:text-4xl mb-3 sm:mb-4">📊</div>
+            <h3 className="text-lg sm:text-xl font-semibold text-gray-800 mb-2">Statistics</h3>
+            <p className="text-sm sm:text-base text-gray-600">
               Track total known words, progress per category, and weekly vocabulary growth with beautiful charts.
             </p>
           </div>
 
-          <div className="bg-white rounded-2xl p-6 shadow-lg hover:shadow-xl transition-shadow">
-            <div className="text-4xl mb-4">🧩</div>
-            <h3 className="text-xl font-semibold text-gray-800 mb-2">Exercises</h3>
-            <p className="text-gray-600">
+          <div className="bg-white rounded-2xl p-4 sm:p-6 shadow-lg hover:shadow-xl transition-all duration-300 transform hover:scale-105">
+            <div className="text-3xl sm:text-4xl mb-3 sm:mb-4">🧩</div>
+            <h3 className="text-lg sm:text-xl font-semibold text-gray-800 mb-2">Exercises</h3>
+            <p className="text-sm sm:text-base text-gray-600">
               Interactive exercises tailored to your child&apos;s level with word recognition, pronunciation, and more.
             </p>
           </div>
 
-          <div className="bg-white rounded-2xl p-6 shadow-lg hover:shadow-xl transition-shadow">
-            <div className="text-4xl mb-4">👶</div>
-            <h3 className="text-xl font-semibold text-gray-800 mb-2">Child Profiles</h3>
-            <p className="text-gray-600">
+          <div className="bg-white rounded-2xl p-4 sm:p-6 shadow-lg hover:shadow-xl transition-all duration-300 transform hover:scale-105">
+            <div className="text-3xl sm:text-4xl mb-3 sm:mb-4">👶</div>
+            <h3 className="text-lg sm:text-xl font-semibold text-gray-800 mb-2">Child Profiles</h3>
+            <p className="text-sm sm:text-base text-gray-600">
               Create profiles with automatic level calculation based on age and track individual progress.
             </p>
           </div>
 
-          <div className="bg-white rounded-2xl p-6 shadow-lg hover:shadow-xl transition-shadow">
-            <div className="text-4xl mb-4">📚</div>
-            <h3 className="text-xl font-semibold text-gray-800 mb-2">Vocabulary</h3>
-            <p className="text-gray-600">
+          <div className="bg-white rounded-2xl p-4 sm:p-6 shadow-lg hover:shadow-xl transition-all duration-300 transform hover:scale-105">
+            <div className="text-3xl sm:text-4xl mb-3 sm:mb-4">📚</div>
+            <h3 className="text-lg sm:text-xl font-semibold text-gray-800 mb-2">Vocabulary</h3>
+            <p className="text-sm sm:text-base text-gray-600">
               Comprehensive word lists organized by categories and levels, with date tracking and notes.
             </p>
           </div>
         </div>
 
         {/* Level System */}
-        <div className="bg-white rounded-2xl p-8 shadow-lg mb-16">
-          <h2 className="text-3xl font-bold text-gray-800 text-center mb-8">
+        <div className="bg-white rounded-2xl p-4 sm:p-6 lg:p-8 shadow-lg mb-8 sm:mb-16 mx-4">
+          <h2 className="text-2xl sm:text-3xl font-bold text-gray-800 text-center mb-6 sm:mb-8">
             🎯 Four Progressive Levels
           </h2>
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-            <div className="text-center p-6 bg-gradient-to-br from-blue-50 to-blue-100 rounded-xl">
-              <div className="text-4xl mb-3">🍼</div>
-              <h3 className="text-lg font-semibold text-gray-800 mb-2">Level 0</h3>
-              <p className="text-sm text-gray-600 mb-2">12-18 months</p>
-              <p className="text-sm text-gray-700">First words (0-50 vocabulary)</p>
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6">
+            <div className="text-center p-4 sm:p-6 bg-gradient-to-br from-blue-50 to-blue-100 rounded-xl hover:shadow-md transition-shadow">
+              <div className="text-3xl sm:text-4xl mb-3">🍼</div>
+              <h3 className="text-base sm:text-lg font-semibold text-gray-800 mb-2">Level 0</h3>
+              <p className="text-xs sm:text-sm text-gray-600 mb-2">12-18 months</p>
+              <p className="text-xs sm:text-sm text-gray-700">First words (0-50 vocabulary)</p>
             </div>
 
-            <div className="text-center p-6 bg-gradient-to-br from-green-50 to-green-100 rounded-xl">
-              <div className="text-4xl mb-3">👶</div>
-              <h3 className="text-lg font-semibold text-gray-800 mb-2">Level 1</h3>
-              <p className="text-sm text-gray-600 mb-2">18-24 months</p>
-              <p className="text-sm text-gray-700">Two-word phrases (50-200 words)</p>
+            <div className="text-center p-4 sm:p-6 bg-gradient-to-br from-green-50 to-green-100 rounded-xl hover:shadow-md transition-shadow">
+              <div className="text-3xl sm:text-4xl mb-3">👶</div>
+              <h3 className="text-base sm:text-lg font-semibold text-gray-800 mb-2">Level 1</h3>
+              <p className="text-xs sm:text-sm text-gray-600 mb-2">18-24 months</p>
+              <p className="text-xs sm:text-sm text-gray-700">Two-word phrases (50-200 words)</p>
             </div>
 
-            <div className="text-center p-6 bg-gradient-to-br from-purple-50 to-purple-100 rounded-xl">
-              <div className="text-4xl mb-3">🧒</div>
-              <h3 className="text-lg font-semibold text-gray-800 mb-2">Level 2</h3>
-              <p className="text-sm text-gray-600 mb-2">2-3 years</p>
-              <p className="text-sm text-gray-700">Simple sentences (200-1000 words)</p>
+            <div className="text-center p-4 sm:p-6 bg-gradient-to-br from-purple-50 to-purple-100 rounded-xl hover:shadow-md transition-shadow">
+              <div className="text-3xl sm:text-4xl mb-3">🧒</div>
+              <h3 className="text-base sm:text-lg font-semibold text-gray-800 mb-2">Level 2</h3>
+              <p className="text-xs sm:text-sm text-gray-600 mb-2">2-3 years</p>
+              <p className="text-xs sm:text-sm text-gray-700">Simple sentences (200-1000 words)</p>
             </div>
 
-            <div className="text-center p-6 bg-gradient-to-br from-orange-50 to-orange-100 rounded-xl">
-              <div className="text-4xl mb-3">👦</div>
-              <h3 className="text-lg font-semibold text-gray-800 mb-2">Level 3</h3>
-              <p className="text-sm text-gray-600 mb-2">3-4 years</p>
-              <p className="text-sm text-gray-700">Complex speech (1000+ words)</p>
+            <div className="text-center p-4 sm:p-6 bg-gradient-to-br from-orange-50 to-orange-100 rounded-xl hover:shadow-md transition-shadow">
+              <div className="text-3xl sm:text-4xl mb-3">👦</div>
+              <h3 className="text-base sm:text-lg font-semibold text-gray-800 mb-2">Level 3</h3>
+              <p className="text-xs sm:text-sm text-gray-600 mb-2">3-4 years</p>
+              <p className="text-xs sm:text-sm text-gray-700">Complex speech (1000+ words)</p>
             </div>
           </div>
         </div>
 
         {/* Research-Based */}
-        <div className="bg-gradient-to-r from-purple-600 to-blue-600 text-white rounded-2xl p-8 text-center">
-          <h2 className="text-3xl font-bold mb-4">🔬 Research-Based Approach</h2>
-          <p className="text-lg mb-6 max-w-2xl mx-auto">
+        <div className="bg-gradient-to-r from-purple-600 to-blue-600 text-white rounded-2xl p-4 sm:p-6 lg:p-8 text-center mx-4">
+          <h2 className="text-2xl sm:text-3xl font-bold mb-4">🔬 Research-Based Approach</h2>
+          <p className="text-base sm:text-lg mb-6 max-w-2xl mx-auto px-2">
             Our vocabulary and exercises are based on established speech development milestones from
             Speech and Language UK and Stanford Children&apos;s Health research.
           </p>
-          <div className="flex flex-col sm:flex-row gap-4 justify-center">
+          <div className="flex flex-col sm:flex-row gap-3 sm:gap-4 justify-center">
             <a
               href="https://speechandlanguage.org.uk/help-for-families/ages-and-stages/"
               target="_blank"
               rel="noopener noreferrer"
-              className="bg-white text-purple-600 px-6 py-3 rounded-xl font-semibold hover:bg-gray-100 transition-colors"
+              className="bg-white text-purple-600 px-4 sm:px-6 py-2 sm:py-3 rounded-xl font-semibold hover:bg-gray-100 transition-all duration-300 transform hover:scale-105 text-sm sm:text-base"
             >
               Speech & Language UK
             </a>
@@ -157,7 +157,7 @@ export default function Home() {
               href="https://www.stanfordchildrens.org/en/topic/default?id=age-appropriate-speech-and-language-milestones-90-P02170"
               target="_blank"
               rel="noopener noreferrer"
-              className="bg-white text-purple-600 px-6 py-3 rounded-xl font-semibold hover:bg-gray-100 transition-colors"
+              className="bg-white text-purple-600 px-4 sm:px-6 py-2 sm:py-3 rounded-xl font-semibold hover:bg-gray-100 transition-all duration-300 transform hover:scale-105 text-sm sm:text-base"
             >
               Stanford Children&apos;s Health
             </a>
